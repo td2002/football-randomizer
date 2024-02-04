@@ -1,0 +1,472 @@
+Albania§§§First Tier§§§Abissnet Superiore§§§10§§§ALB1
+Albania§§§Second Tier§§§Kategoria e Parë§§§12§§§ALB2
+Albania§§§Youth league§§§Kategoria Superiore U21§§§12§§§AL21
+Algeria§§§First Tier§§§Ligue Professionnelle 1§§§16§§§ALG1
+Andorra§§§First Tier§§§Primera Divisió§§§10§§§AND1
+Andorra§§§Second Tier§§§Segona Divisió§§§6§§§AND2
+Argentina§§§First Tier§§§Professional Football League§§§28§§§AR1N
+Argentina§§§Second Tier§§§Primera Nacional§§§37§§§ARG2
+Argentina§§§Third Tier§§§Torneo Federal A§§§36§§§ARG3
+Argentina§§§League Cup§§§Copa de la Liga Profesional de Fútbol§§§28§§§CDLP
+Armenia§§§First Tier§§§Bardzraguyn khumb§§§10§§§ARM1
+Armenia§§§Second Tier§§§Armenian First League§§§15§§§ARM2
+Armenia§§§Youth league§§§U18 Patanekan Arajnutyun§§§8§§§AR18
+Australia§§§First Tier§§§A-League Men§§§12§§§AUS1
+Australia§§§Second Tier§§§National Premier League - New South Wales§§§16§§§A2SW
+Australia§§§Second Tier§§§National Premier League - Victoria§§§14§§§A2VI
+Austria§§§First Tier§§§Bundesliga§§§12§§§A1
+Austria§§§Second Tier§§§2. Liga§§§16§§§A2
+Austria§§§Third Tier§§§Regional League Central§§§16§§§ATRM
+Austria§§§Third Tier§§§Regional League East§§§16§§§ATRO
+Austria§§§Third Tier§§§Regionalliga West§§§16§§§ATRW
+Austria§§§Fourth Tier§§§1. Landesliga Niederösterreich§§§16§§§A4N
+Austria§§§Fourth Tier§§§Burgenlandliga§§§16§§§A4B
+Austria§§§Fourth Tier§§§Eliteliga Vorarlberg§§§14§§§A4V
+Austria§§§Fourth Tier§§§Kärntner Liga§§§16§§§A4K
+Austria§§§Fourth Tier§§§Landesliga Steiermark§§§16§§§A4ST
+Austria§§§Fourth Tier§§§Oberösterreich Liga§§§16§§§A4O
+Austria§§§Fourth Tier§§§Regionalliga Tirol§§§12§§§A4T
+Austria§§§Fourth Tier§§§Salzburger Liga§§§16§§§A4S
+Austria§§§Fourth Tier§§§Wiener Stadtliga§§§16§§§A4W
+Austria§§§Youth league§§§ÖFB Jugendliga U16§§§13§§§JGD3
+Austria§§§Youth league§§§ÖFB Jugendliga U18§§§13§§§JGD2
+Azerbaijan§§§First Tier§§§Premyer Liqa§§§10§§§AZ1
+Bangladesh§§§First Tier§§§Bangladesh Premier League§§§11§§§BGD1
+Belarus§§§First Tier§§§Vysheyshaya Liga§§§15§§§WER1
+Belarus§§§Second Tier§§§Pershaya Liga§§§17§§§WER2
+Belgium§§§First Tier§§§Jupiler Pro League§§§16§§§BE1
+Belgium§§§Second Tier§§§Challenger Pro League§§§16§§§BE2
+Belgium§§§Third Tier§§§1ste Nationale§§§18§§§BEL3
+Belgium§§§Fourth Tier§§§2de Nationale ACFF§§§18§§§ACFF
+Belgium§§§Fourth Tier§§§2de Nationale VFV A§§§18§§§VFVA
+Belgium§§§Fourth Tier§§§2de Nationale VFV B§§§18§§§VFVB
+Bolivia§§§First Tier§§§División Profesional§§§17§§§BO1A
+Bosnia-Herzegovina§§§First Tier§§§Premijer Liga§§§12§§§BOS1
+Bosnia-Herzegovina§§§Second Tier§§§Prva Liga RS§§§18§§§BH2S
+Bosnia-Herzegovina§§§Second Tier§§§Prva liga FBiH§§§16§§§BOS2
+Bosnia-Herzegovina§§§Youth league§§§Premijer Liga BiH U17§§§12§§§BI17
+Bosnia-Herzegovina§§§Youth league§§§Premijer Liga BiH U19§§§14§§§BI19
+Brazil§§§First Tier§§§Campeonato Brasileiro Série A§§§20§§§BRA1
+Brazil§§§Second Tier§§§Campeonato Brasileiro Série B§§§20§§§BRA2
+Brazil§§§Further Cup§§§Copa do Nordeste - Fase de Grupos§§§16§§§BRNE
+Brazil§§§Youth league§§§CBF Brasileiro U20§§§20§§§CB20
+Brazil§§§Regional Championship§§§Campeonato Carioca - Taça Guanabara§§§12§§§BRCG
+Brazil§§§Regional Championship§§§Campeonato Cearense - Group Stage§§§10§§§BRCE
+Brazil§§§Regional Championship§§§Campeonato Gaúcho§§§12§§§BRRS
+Brazil§§§Regional Championship§§§Campeonato Paulista - Série A1§§§16§§§BCP1
+Brazil§§§Regional Championship§§§Campeonato Potiguar§§§8§§§BRRN
+Bulgaria§§§First Tier§§§efbet Liga§§§16§§§BU1
+Bulgaria§§§Second Tier§§§Vtora Liga§§§18§§§BU2
+Cambodia§§§First Tier§§§Cambodian Premier League§§§10§§§KHM1
+Canada§§§First Tier§§§Canadian Premier League§§§8§§§CDN1
+Chile§§§First Tier§§§Primera División de Chile§§§16§§§CLPD
+Chile§§§Second Tier§§§Primera B§§§16§§§CL2B
+China§§§First Tier§§§Chinese Super League§§§16§§§CSL
+China§§§Second Tier§§§China League One§§§16§§§CLO
+China§§§Third Tier§§§China League Two A§§§8§§§CHL3
+China§§§Third Tier§§§China League Two B§§§8§§§CL3S
+China§§§Third Tier§§§League Two Promotion Stage§§§8§§§CH3P
+China§§§Third Tier§§§League Two Relegation Stage§§§8§§§CH3R
+Chinese Taipei§§§First Tier§§§Taiwan Football Premier League§§§8§§§TFPL
+Chinese Taipei§§§Second Tier§§§Taiwan Football League Div.2§§§6§§§TFL2
+Colombia§§§First Tier§§§Liga Dimayor Apertura§§§20§§§COLP
+Colombia§§§First Tier§§§Liga Dimayor Finalización§§§20§§§COL1
+Colombia§§§Second Tier§§§Torneo DIMAYOR I§§§16§§§CO2T
+Colombia§§§Second Tier§§§Torneo DIMAYOR II§§§16§§§CO22
+Colombia§§§Play-Offs§§§Fase Final Liga DIMAYOR I§§§8§§§COLF
+Colombia§§§Play-Offs§§§Torneo DIMAYOR I Playoff§§§8§§§C2P1
+Costa Rica§§§First Tier§§§Primera División Apertura§§§12§§§CRPD
+Costa Rica§§§First Tier§§§Primera División Clausura§§§12§§§PDV1
+Croatia§§§First Tier§§§SuperSport HNL§§§10§§§KR1
+Croatia§§§Second Tier§§§Prva Nogometna Liga§§§12§§§KR2
+Croatia§§§Youth league§§§Prva HNL - Juniori§§§16§§§CR19
+Cyprus§§§First Tier§§§Protathlima Cyta§§§14§§§ZYP1
+Cyprus§§§Second Tier§§§Second Division§§§16§§§CYP2
+Cyprus§§§Third Tier§§§Third Division§§§16§§§CYP3
+Czech Republic§§§First Tier§§§Fortuna Liga§§§16§§§TS1
+Czech Republic§§§Second Tier§§§Fortuna Narodni liga§§§16§§§TS2
+Czech Republic§§§Third Tier§§§Ceska fotbalova liga§§§32§§§CZ3C
+Czech Republic§§§Third Tier§§§Moravskoslezska fotbalova liga§§§18§§§CZ3M
+Czech Republic§§§Youth league§§§1. Dorostenecka liga§§§16§§§CZ19
+Denmark§§§First Tier§§§Superligaen§§§12§§§DK1
+Denmark§§§Second Tier§§§1.Division§§§12§§§DK2
+Denmark§§§Third Tier§§§2.Division§§§12§§§DK3O
+Denmark§§§Youth league§§§U19 Boys Division§§§16§§§DKDD
+Denmark§§§Youth league§§§U19 Boys League§§§14§§§DKDL
+Denmark§§§Reserve league§§§Future Cup§§§16§§§DKRE
+Dominican Republic§§§First Tier§§§Liga Dominicana de Fútbol§§§9§§§DOM1
+Dominican Republic§§§First Tier§§§Liga Dominicana de Fútbol - Liguilla§§§6§§§DO1P
+Ecuador§§§First Tier§§§LigaPro Serie A Primera Etapa§§§16§§§EL1A
+Ecuador§§§First Tier§§§LigaPro Serie A Segunda Etapa§§§16§§§EL1S
+Egypt§§§First Tier§§§Egyptian Premier League§§§18§§§EGY1
+El Salvador§§§First Tier§§§Primera División Apertura§§§12§§§SL1A
+England§§§First Tier§§§Premier League§§§20§§§GB1
+England§§§Second Tier§§§Championship§§§24§§§GB2
+England§§§Third Tier§§§League One§§§24§§§GB3
+England§§§Fourth Tier§§§League Two§§§24§§§GB4
+England§§§Fifth Tier§§§National League§§§24§§§CNAT
+England§§§Sixth Tier§§§National League North§§§24§§§NLN6
+England§§§Sixth Tier§§§National League South§§§24§§§NLS6
+England§§§Youth league§§§U18 Premier League§§§26§§§GB18
+England§§§Reserve league§§§Premier League 2§§§26§§§GB21
+Estonia§§§First Tier§§§Premium Liiga§§§10§§§EST1
+Estonia§§§Second Tier§§§Esiliiga§§§10§§§EST2
+Estonia§§§Third Tier§§§Esiliiga B§§§10§§§EST3
+Estonia§§§Play-Offs§§§U19 Eliitliiga Meistriliiga Playoffs§§§4§§§ELMP
+Estonia§§§Play-Offs§§§U19 Eliitliiga Qualification§§§3§§§QELM
+Estonia§§§Youth league§§§U17 Eliitliiga Esiliiga§§§12§§§ES17
+Estonia§§§Youth league§§§U19 Eliitliiga Esiliiga§§§11§§§EE19
+Estonia§§§Youth league§§§U19 Eliitliiga Meistriliiga§§§8§§§ELME
+Faroe Islands§§§First Tier§§§Betri-deildin§§§10§§§FARO
+Faroe Islands§§§Second Tier§§§1. deild§§§10§§§FAR2
+Faroe Islands§§§Third Tier§§§2. deild§§§12§§§FAR3
+Faroe Islands§§§Fourth Tier§§§3. deild§§§12§§§FAR4
+Faroe Islands§§§Fourth Tier§§§3. deild Finalrunde§§§10§§§F4FR
+Fiji§§§First Tier§§§Fiji Premier League§§§10§§§FIJ1
+Finland§§§First Tier§§§Veikkausliiga§§§12§§§FI1
+Finland§§§Second Tier§§§Ykkönen§§§12§§§FI2
+Finland§§§Third Tier§§§Kakkonen - Group A§§§12§§§FI3A
+Finland§§§Third Tier§§§Kakkonen - Group B§§§12§§§FI3B
+Finland§§§Third Tier§§§Kakkonen - Group C§§§12§§§FI3C
+Finland§§§Fourth Tier§§§Kolmonen Etelä Group A§§§12§§§KOG1
+Finland§§§Fourth Tier§§§Kolmonen Etelä Group B§§§12§§§KOG2
+Finland§§§Fourth Tier§§§Kolmonen Etelä Group C§§§12§§§KOG3
+Finland§§§Fourth Tier§§§Kolmonen Itä-Suomi§§§22§§§FI4L
+Finland§§§Fourth Tier§§§Kolmonen Pohjoinen§§§10§§§F4KP
+Finland§§§Play-Offs§§§Veikkausliiga Championship Group§§§6§§§F1CL
+Finland§§§Play-Offs§§§Veikkausliiga Relegation Group§§§6§§§F1CC
+Finland§§§Play-Offs§§§Ykkönen Promotion Group§§§6§§§YKAU
+Finland§§§Play-Offs§§§Ykkönen Relegation Group§§§6§§§YKAB
+Finland§§§Youth league§§§A-Pojat SM Sarja Endrunde§§§12§§§FJE
+Finland§§§Youth league§§§A-pojat SM-sarja§§§20§§§FINJ
+France§§§First Tier§§§Ligue 1§§§18§§§FR1
+France§§§Second Tier§§§Ligue 2§§§20§§§FR2
+France§§§Third Tier§§§Championnat National§§§18§§§FR3
+France§§§Fourth Tier§§§Championnat National 2 - Groupe A§§§14§§§CN2A
+France§§§Fourth Tier§§§Championnat National 2 - Groupe B§§§14§§§CN2B
+France§§§Fourth Tier§§§Championnat National 2 - Groupe C§§§14§§§CN2C
+France§§§Fourth Tier§§§Championnat National 2 - Groupe D§§§14§§§CN2D
+France§§§Fifth Tier§§§Championnat National 3 - Groupe A§§§13§§§C3CM
+France§§§Fifth Tier§§§Championnat National 3 - Groupe B§§§14§§§C3NA
+France§§§Fifth Tier§§§Championnat National 3 - Groupe C§§§14§§§C3VL
+France§§§Fifth Tier§§§Championnat National 3 - Groupe D§§§14§§§C3PL
+France§§§Fifth Tier§§§Championnat National 3 - Groupe E§§§14§§§C3BR
+France§§§Fifth Tier§§§Championnat National 3 - Groupe F§§§14§§§C3NO
+France§§§Fifth Tier§§§Championnat National 3 - Groupe G§§§14§§§C3HF
+France§§§Fifth Tier§§§Championnat National 3 - Groupe H§§§14§§§C3IF
+France§§§Fifth Tier§§§Championnat National 3 - Groupe I§§§14§§§C3GE
+France§§§Fifth Tier§§§Championnat National 3 - Groupe J§§§14§§§C3BF
+France§§§Fifth Tier§§§Championnat National 3 - Groupe K§§§14§§§C3AR
+France§§§Youth league§§§Championnat National U19 - Groupe A§§§14§§§F19A
+France§§§Youth league§§§Championnat National U19 - Groupe B§§§14§§§F19B
+France§§§Youth league§§§Championnat National U19 - Groupe C§§§14§§§F19C
+France§§§Youth league§§§Championnat National U19 - Groupe D§§§14§§§F19D
+Georgia§§§First Tier§§§Erovnuli Liga§§§10§§§GE1N
+Georgia§§§Second Tier§§§Erovnuli Liga 2§§§10§§§GEO2
+Germany§§§First Tier§§§Bundesliga§§§18§§§L1
+Germany§§§Second Tier§§§2. Bundesliga§§§18§§§L2
+Germany§§§Third Tier§§§3. Liga§§§20§§§L3
+Germany§§§Fourth Tier§§§Regionalliga Bayern§§§18§§§RLB3
+Germany§§§Fourth Tier§§§Regionalliga Nord§§§18§§§RLN3
+Germany§§§Fourth Tier§§§Regionalliga Northeast§§§18§§§RLN4
+Germany§§§Fourth Tier§§§Regionalliga Südwest§§§18§§§RLSW
+Germany§§§Fourth Tier§§§Regionalliga West§§§18§§§RLW3
+Germany§§§Fifth Tier§§§Bayernliga Nord§§§19§§§OLB1
+Germany§§§Fifth Tier§§§Bayernliga Süd§§§18§§§OLB2
+Germany§§§Fifth Tier§§§Bremenliga§§§16§§§OBLK
+Germany§§§Fifth Tier§§§Hessenliga§§§18§§§OBLC
+Germany§§§Fifth Tier§§§Mittelrheinliga§§§16§§§OLMR
+Germany§§§Fifth Tier§§§NOFV-Oberliga Nord§§§16§§§OBLF
+Germany§§§Fifth Tier§§§NOFV-Oberliga Süd§§§16§§§OBLG
+Germany§§§Fifth Tier§§§Oberliga Baden-Württemberg§§§18§§§OBLB
+Germany§§§Fifth Tier§§§Oberliga Hamburg§§§18§§§OBLJ
+Germany§§§Fifth Tier§§§Oberliga Niederrhein§§§18§§§OLNI
+Germany§§§Fifth Tier§§§Oberliga Niedersachsen§§§18§§§OBLN
+Germany§§§Fifth Tier§§§Oberliga Rheinland-Pfalz/Saar§§§20§§§OLRP
+Germany§§§Fifth Tier§§§Oberliga Schleswig-Holstein§§§16§§§OBLL
+Germany§§§Fifth Tier§§§Oberliga Westfalen§§§18§§§OLW3
+Germany§§§Sixth Tier§§§Berlin-Liga§§§18§§§VLBE
+Germany§§§Sixth Tier§§§Brandenburgliga§§§17§§§BRBL
+Germany§§§Sixth Tier§§§Landesliga Bayern Nordost§§§18§§§LBNO
+Germany§§§Sixth Tier§§§Landesliga Bayern Nordwest§§§18§§§LBNW
+Germany§§§Sixth Tier§§§Landesliga Bayern Südost§§§18§§§LBSO
+Germany§§§Sixth Tier§§§Landesliga Bayern Südwest§§§18§§§LBSW
+Germany§§§Sixth Tier§§§Landesliga Bayern-Mitte§§§18§§§LBMI
+Germany§§§Sixth Tier§§§Landesliga Braunschweig§§§18§§§LNBR
+Germany§§§Sixth Tier§§§Landesliga Bremen§§§16§§§LLHB
+Germany§§§Sixth Tier§§§Landesliga Hammonia§§§16§§§LLHM
+Germany§§§Sixth Tier§§§Landesliga Hannover§§§18§§§LNHA
+Germany§§§Sixth Tier§§§Landesliga Hansa§§§16§§§LLHA
+Germany§§§Sixth Tier§§§Landesliga Holstein§§§16§§§LLHO
+Germany§§§Sixth Tier§§§Landesliga Lüneburg§§§18§§§LLL
+Germany§§§Sixth Tier§§§Landesliga Mittelrhein Staffel 1§§§16§§§LLM1
+Germany§§§Sixth Tier§§§Landesliga Mittelrhein Staffel 2§§§16§§§LLM2
+Germany§§§Sixth Tier§§§Landesliga Niederrhein - Gruppe 1§§§20§§§LNR1
+Germany§§§Sixth Tier§§§Landesliga Niederrhein - Gruppe 2§§§20§§§LNR2
+Germany§§§Sixth Tier§§§Landesliga Sachsen§§§16§§§SLI
+Germany§§§Sixth Tier§§§Landesliga Schleswig§§§16§§§LLSL
+Germany§§§Sixth Tier§§§Landesliga Weser-Ems§§§17§§§LNWE
+Germany§§§Sixth Tier§§§Rheinlandliga§§§18§§§RHL
+Germany§§§Sixth Tier§§§Schröder-Liga Saar§§§18§§§LLSA
+Germany§§§Sixth Tier§§§Thüringenliga§§§16§§§THLI
+Germany§§§Sixth Tier§§§Verbandsliga Hessen-Mitte§§§17§§§VLHM
+Germany§§§Sixth Tier§§§Verbandsliga Hessen-Nord§§§17§§§VLHN
+Germany§§§Sixth Tier§§§Verbandsliga Hessen-Süd§§§17§§§VLHS
+Germany§§§Sixth Tier§§§Verbandsliga Mecklenburg-Vorpommern§§§16§§§VLMV
+Germany§§§Sixth Tier§§§Verbandsliga Nordbaden§§§16§§§VLBA
+Germany§§§Sixth Tier§§§Verbandsliga Sachsen-Anhalt§§§19§§§VLSA
+Germany§§§Sixth Tier§§§Verbandsliga Südbaden§§§17§§§VLSB
+Germany§§§Sixth Tier§§§Verbandsliga Südwest§§§16§§§VLSW
+Germany§§§Sixth Tier§§§Verbandsliga Württemberg§§§16§§§VLBW
+Germany§§§Sixth Tier§§§Westfalenliga 1§§§16§§§VLW1
+Germany§§§Sixth Tier§§§Westfalenliga 2§§§16§§§VLW2
+Germany§§§Youth league§§§A-Junioren Bundesliga North/Northeast§§§14§§§AJ1
+Germany§§§Youth league§§§A-Junioren Bundesliga West§§§14§§§AJ2
+Germany§§§Youth league§§§A-Juniors Bundesliga South/Southwest§§§14§§§AJ3
+Germany§§§Youth league§§§B-Junioren Bundesliga Nord/Nordost§§§14§§§BJ1
+Germany§§§Youth league§§§B-Junioren Bundesliga West§§§14§§§BJ2
+Germany§§§Youth league§§§B-Juniors Bundesliga South/Southwest§§§14§§§BJ3
+Ghana§§§First Tier§§§Ghana Premier League§§§18§§§GHPL
+Gibraltar§§§First Tier§§§Gibraltar Football League§§§11§§§GI1
+Gibraltar§§§Reserve league§§§Gibraltar Intermediate League§§§11§§§GIIL
+Greece§§§First Tier§§§Super League 1§§§14§§§GR1
+Greece§§§Second Tier§§§Super League 2§§§24§§§GRS2
+Greece§§§Youth league§§§Super League U19§§§14§§§GR20
+Guatemala§§§First Tier§§§Liga Guate Apertura§§§12§§§GU1A
+Honduras§§§First Tier§§§Liga Nacional Apertura§§§10§§§HO1A
+Hongkong§§§First Tier§§§Hong Kong Premier League§§§11§§§HGKG
+Hongkong§§§Second Tier§§§Hong Kong First Division§§§12§§§HK2L
+Hongkong§§§Third Tier§§§Hong Kong Second Division§§§16§§§HK3L
+Hungary§§§First Tier§§§Nemzeti Bajnokság§§§12§§§UNG1
+Hungary§§§Second Tier§§§Nemzeti Bajnokság II.§§§18§§§UN2
+Iceland§§§First Tier§§§Besta deild§§§12§§§IS1
+Iceland§§§Second Tier§§§Lengjudeild§§§12§§§IS2
+Iceland§§§Third Tier§§§2. deild§§§12§§§ISL3
+Iceland§§§Play-Offs§§§Besta Deild - Finals§§§12§§§IS1P
+India§§§First Tier§§§Indian Super League§§§12§§§IND1
+India§§§Second Tier§§§I-League§§§13§§§INIL
+India§§§Third Tier§§§2nd Division League§§§5§§§IND2
+India§§§Fourth Tier§§§3rd Division League§§§24§§§IN4L
+India§§§Play-Offs§§§2nd Division League Playoffs§§§5§§§ILPL
+Indonesia§§§First Tier§§§Liga 1 Indonesia§§§18§§§IN1L
+Indonesia§§§Second Tier§§§Liga 2 Indonesia§§§28§§§ILI2
+Iran§§§First Tier§§§Persian Gulf Pro League§§§16§§§IRN1
+Iran§§§Second Tier§§§Azadegan League§§§18§§§IRN2
+Iran§§§Third Tier§§§League 2§§§28§§§IRN3
+Ireland§§§First Tier§§§League of Ireland Premier Division§§§10§§§IR1
+Ireland§§§Second Tier§§§League of Ireland First Division§§§10§§§IR2
+Israel§§§First Tier§§§Ligat ha'Al§§§14§§§ISR1
+Israel§§§Second Tier§§§Liga Leumit§§§16§§§ISR2
+Italy§§§First Tier§§§Serie A§§§20§§§IT1
+Italy§§§Second Tier§§§Serie B§§§20§§§IT2
+Italy§§§Third Tier§§§Serie C - Girone A§§§20§§§IT3A
+Italy§§§Third Tier§§§Serie C - Girone B§§§20§§§IT3B
+Italy§§§Third Tier§§§Serie C - Girone C§§§20§§§IT3C
+Italy§§§Fourth Tier§§§Serie D - Girone A§§§20§§§IT4A
+Italy§§§Fourth Tier§§§Serie D - Girone B§§§20§§§IT4B
+Italy§§§Fourth Tier§§§Serie D - Girone C§§§18§§§IT4C
+Italy§§§Fourth Tier§§§Serie D - Girone D§§§18§§§IT4D
+Italy§§§Fourth Tier§§§Serie D - Girone E§§§18§§§IT4E
+Italy§§§Fourth Tier§§§Serie D - Girone F§§§18§§§IT4F
+Italy§§§Fourth Tier§§§Serie D - Girone G§§§18§§§IT4G
+Italy§§§Fourth Tier§§§Serie D - Girone H§§§18§§§IT4H
+Italy§§§Fourth Tier§§§Serie D - Girone I§§§19§§§IT4I
+Italy§§§Youth league§§§Campionato Under 17 - A§§§13§§§ITJ4
+Italy§§§Youth league§§§Campionato nazionale Under 17 - B§§§14§§§ITJ5
+Italy§§§Youth league§§§Campionato nazionale Under 17 - C§§§13§§§ITJ6
+Italy§§§Youth league§§§Primavera 1§§§18§§§IJ1
+Italy§§§Youth league§§§Primavera 2 - A§§§16§§§IJ2A
+Italy§§§Youth league§§§Primavera 2 - B§§§16§§§IJ2B
+Jamaica§§§First Tier§§§Jamaica Premier League§§§12§§§JPL1
+Japan§§§First Tier§§§J1 League§§§18§§§JAP1
+Japan§§§Second Tier§§§J2 League§§§22§§§JAP2
+Japan§§§Third Tier§§§J3 League§§§20§§§JAP3
+Japan§§§Fourth Tier§§§Japan Football League§§§15§§§JFL
+Japan§§§Fifth Tier§§§Chugoku Soccer League§§§10§§§JCSL
+Japan§§§Fifth Tier§§§Hokkaido Soccer League§§§8§§§HOSL
+Japan§§§Fifth Tier§§§Hokushin'etsu Football League (Div.1)§§§8§§§HKSE
+Japan§§§Fifth Tier§§§Kansai Soccer League (Div.1)§§§8§§§JPKA
+Japan§§§Fifth Tier§§§Kanto Soccer League (Div.1)§§§10§§§KTOS
+Japan§§§Fifth Tier§§§Kyushu Soccer League§§§10§§§JPKS
+Japan§§§Fifth Tier§§§Shikoku Soccer League§§§8§§§SHSL
+Japan§§§Fifth Tier§§§Tohoku Soccer League (Div.1)§§§10§§§TOHL
+Japan§§§Fifth Tier§§§Tokai Soccer League (Div.1)§§§8§§§TOSL
+Japan§§§Sixth Tier§§§Hokushin'etsu Football League (Div.2)§§§8§§§J6H2
+Japan§§§Sixth Tier§§§Kansai Soccer League (Div.2)§§§8§§§J6KA
+Japan§§§Sixth Tier§§§Kanto Soccer League (Div.2)§§§10§§§J6K2
+Japan§§§Sixth Tier§§§Tohoku Soccer League (Div.2 North)§§§10§§§J6TN
+Japan§§§Sixth Tier§§§Tohoku Soccer League (Div.2 South)§§§10§§§J6TS
+Japan§§§Sixth Tier§§§Tokai Soccer League (Div.2)§§§9§§§J6T2
+Japan§§§Youth league§§§Prince Takamado U18 Premier League East§§§12§§§J18E
+Japan§§§Youth league§§§Prince Takamado U18 Premier League West§§§12§§§J18W
+Kazakhstan§§§First Tier§§§Premier Liga§§§14§§§KAS1
+Kazakhstan§§§Second Tier§§§Pervaya Liga§§§15§§§KAS2
+Korea, South§§§First Tier§§§K League 1§§§12§§§RSK1
+Korea, South§§§Second Tier§§§K League 2§§§13§§§RSK2
+Korea, South§§§Third Tier§§§K3 League§§§16§§§K3L
+Korea, South§§§Fourth Tier§§§K4 League§§§17§§§K4L
+Kosovo§§§First Tier§§§Albi Mall Superliga§§§10§§§KO1
+Kyrgyzstan§§§First Tier§§§Kyrgyz Premier League§§§10§§§KG1L
+Laos§§§First Tier§§§Lao League 1§§§8§§§LAO1
+Latvia§§§First Tier§§§Virsliga§§§10§§§LET1
+Latvia§§§Second Tier§§§Nakotnes liga§§§14§§§LET2
+Lebanon§§§First Tier§§§Lebanese Premier League§§§12§§§LIB1
+Lithuania§§§First Tier§§§Optibet A Lyga§§§10§§§LI1
+Luxembourg§§§First Tier§§§BGL Ligue§§§16§§§LUX1
+Luxembourg§§§Second Tier§§§Ehrenpromotion§§§16§§§LUX2
+Malaysia§§§First Tier§§§Malaysia Super League§§§14§§§MYS1
+Malta§§§First Tier§§§Gozo Football League First Division§§§8§§§GZO1
+Malta§§§First Tier§§§Premier League§§§14§§§MAL1
+Malta§§§Second Tier§§§Challenge League§§§16§§§MAL2
+Mexico§§§First Tier§§§Liga MX Apertura§§§18§§§MEXA
+Mexico§§§First Tier§§§Liga MX Clausura§§§18§§§MEX1
+Mexico§§§Second Tier§§§Liga de Expansión MX Apertura§§§15§§§MEXB
+Mexico§§§Second Tier§§§Liga de Expansión MX Clausura§§§33§§§MEX2
+Mexico§§§Youth league§§§Liga MX U23 Apertura§§§18§§§M23A
+Moldova§§§First Tier§§§Super Liga§§§8§§§MO1N
+Montenegro§§§First Tier§§§Meridianbet 1. CFL§§§10§§§MNE1
+Montenegro§§§Second Tier§§§2. CFL§§§10§§§MNE2
+Morocco§§§First Tier§§§Botola Pro Inwi§§§16§§§MAR1
+Myanmar§§§First Tier§§§Myanmar National League§§§12§§§MYA1
+Nepal§§§First Tier§§§Nepal Super League§§§9§§§NPL1
+Netherlands§§§First Tier§§§Eredivisie§§§18§§§NL1
+Netherlands§§§Second Tier§§§Keuken Kampioen Divisie§§§20§§§NL2
+Netherlands§§§Third Tier§§§Tweede Divisie§§§18§§§NTD
+Netherlands§§§Fourth Tier§§§Derde Divisie A§§§18§§§510
+Netherlands§§§Fourth Tier§§§Derde Divisie B§§§18§§§511
+Netherlands§§§Youth league§§§O18 Divisie 1 Fall§§§8§§§181F
+Netherlands§§§Youth league§§§O21 Divisie 1 Fall§§§8§§§211F
+Netherlands§§§Youth league§§§O21 Divisie 2 Fall§§§8§§§212F
+Netherlands§§§Youth league§§§U18 Division 2 Fall§§§8§§§182F
+New Zealand§§§First Tier§§§New Zealand Central League§§§10§§§NCL1
+New Zealand§§§First Tier§§§New Zealand National League§§§10§§§NZNL
+New Zealand§§§First Tier§§§New Zealand Northern League§§§12§§§NNL1
+New Zealand§§§First Tier§§§New Zealand Southern League§§§10§§§NSL1
+Nicaragua§§§First Tier§§§Liga Primera de Nicaragua Apertura§§§10§§§NC1A
+Nigeria§§§First Tier§§§Nigeria Professional Football League§§§20§§§NPFL
+Nigeria§§§Play-Offs§§§Nigeria Professional Football League Playoffs§§§6§§§NPPL
+North Macedonia§§§First Tier§§§Prva Makedonska Fudbalska Liga§§§12§§§MAZ1
+Northern Ireland§§§First Tier§§§Sports Direct Premiership§§§12§§§NIR1
+Northern Ireland§§§Second Tier§§§Championship§§§12§§§NIR2
+Northern Ireland§§§Third Tier§§§Intermedia§§§14§§§NIR3
+Northern Ireland§§§Domestic Super Cup§§§NIFL Charity Shield§§§2§§§NSC
+Norway§§§First Tier§§§Eliteserien§§§16§§§NO1
+Norway§§§Second Tier§§§OBOS-ligaen§§§16§§§NO2
+Norway§§§Third Tier§§§PostNord-ligaen Avd. 1§§§14§§§NO31
+Norway§§§Third Tier§§§PostNord-ligaen Avd. 2§§§14§§§NO32
+Panama§§§First Tier§§§Liga Panameña de Fútbol Apertura§§§12§§§PN1A
+Panama§§§First Tier§§§Liga Panameña de Fútbol Clausura§§§12§§§PN1C
+Paraguay§§§First Tier§§§Primera División Apertura§§§12§§§PR1A
+Paraguay§§§First Tier§§§Primera División Clausura§§§12§§§PR1C
+Peru§§§First Tier§§§Liga 1 Apertura§§§19§§§TDeA
+Peru§§§First Tier§§§Liga 1 Clausura§§§19§§§TDeC
+Peru§§§Second Tier§§§Liga 2§§§14§§§PER2
+Poland§§§First Tier§§§PKO BP Ekstraklasa§§§18§§§PL1
+Poland§§§Second Tier§§§Fortuna 1 Liga§§§18§§§PL2
+Poland§§§Third Tier§§§2 Liga§§§18§§§PL2L
+Poland§§§Fourth Tier§§§3 Liga - Group I§§§18§§§PL31
+Poland§§§Fourth Tier§§§3 Liga - Group II§§§18§§§PL32
+Poland§§§Fourth Tier§§§3 Liga - Group III§§§18§§§PL33
+Poland§§§Fourth Tier§§§3 Liga - Group IV§§§18§§§PL34
+Poland§§§Youth league§§§Central Youth League§§§16§§§PLZJ
+Portugal§§§First Tier§§§Liga Portugal§§§18§§§PO1
+Portugal§§§Second Tier§§§Liga Portugal 2§§§18§§§PO2
+Portugal§§§Third Tier§§§Liga 3§§§20§§§PT3A
+Portugal§§§Youth league§§§Liga Revelação U23§§§16§§§PT23
+Qatar§§§First Tier§§§Qatar Stars League§§§12§§§QSL
+Romania§§§First Tier§§§SuperLiga§§§16§§§RO1
+Romania§§§Second Tier§§§Liga 2§§§20§§§RO2
+Russia§§§First Tier§§§Premier Liga§§§16§§§RU1
+Russia§§§Second Tier§§§1.Division§§§18§§§RU2
+Russia§§§Third Tier§§§2. Division A (Phase 1)§§§20§§§R3D1
+Russia§§§Third Tier§§§Second League Division B Gruppe 1§§§12§§§RPLS
+Russia§§§Third Tier§§§Second League Division B Gruppe 2§§§18§§§RPLW
+Russia§§§Third Tier§§§Second League Division B Gruppe 3§§§18§§§RPLZ
+Russia§§§Third Tier§§§Second League Division B Gruppe 4§§§9§§§RPLU
+Russia§§§Youth league§§§Russian U16 Youth Football League§§§14§§§RU16
+Russia§§§Youth league§§§Russian U17 Youth Football League§§§14§§§RU17
+Russia§§§Youth league§§§U19 M-Liga§§§20§§§RUJL
+San Marino§§§First Tier§§§Campionato Sammarinese§§§16§§§SMR1
+Saudi Arabia§§§First Tier§§§Saudi Pro League§§§18§§§SA1
+Saudi Arabia§§§Second Tier§§§Yelo League§§§18§§§SA2L
+Scotland§§§First Tier§§§Scottish Premiership§§§12§§§SC1
+Scotland§§§Second Tier§§§Scottish Championship§§§10§§§SC2
+Scotland§§§Third Tier§§§Scottish League One§§§10§§§SC3
+Scotland§§§Fourth Tier§§§Scottish League Two§§§10§§§SC4
+Scotland§§§Fifth Tier§§§Scottish Highland Football League§§§18§§§SC5H
+Scotland§§§Fifth Tier§§§Scottish Lowland Football League§§§18§§§SC5L
+Scotland§§§Play-Offs§§§Scottish League Two Play Offs§§§3§§§SL2P
+Serbia§§§First Tier§§§Super liga Srbije§§§16§§§SER1
+Serbia§§§Second Tier§§§Prva liga Srbije§§§16§§§SER2
+Serbia§§§Youth league§§§Kadetska liga Srbije§§§16§§§SB17
+Serbia§§§Youth league§§§Omladinska liga Srbije§§§16§§§SB19
+Singapore§§§First Tier§§§Singapore Premier League§§§9§§§SIN1
+Slovakia§§§First Tier§§§Nike Liga§§§12§§§SLO1
+Slovakia§§§Second Tier§§§II. Liga§§§16§§§SK2
+Slovakia§§§Youth league§§§I. Liga starsieho dorastu§§§14§§§SK19
+Slovenia§§§First Tier§§§Prva Liga§§§10§§§SL1
+Slovenia§§§Second Tier§§§Druga Liga§§§16§§§SL2
+Slovenia§§§Youth league§§§NextGen Liga§§§16§§§SL19
+South Africa§§§First Tier§§§DStv Premiership§§§16§§§SFA1
+Spain§§§First Tier§§§LaLiga§§§20§§§ES1
+Spain§§§Second Tier§§§LaLiga2§§§22§§§ES2
+Spain§§§Third Tier§§§Primera Federación - Grupo I§§§20§§§E3G1
+Spain§§§Third Tier§§§Primera Federación - Grupo II§§§20§§§E3G2
+Spain§§§Fourth Tier§§§Segunda Federación - Grupo I§§§18§§§E4G1
+Spain§§§Fourth Tier§§§Segunda Federación - Grupo II§§§18§§§E4G2
+Spain§§§Fourth Tier§§§Segunda Federación - Grupo III§§§18§§§E4G3
+Spain§§§Fourth Tier§§§Segunda Federación - Grupo IV§§§18§§§E4G4
+Spain§§§Fourth Tier§§§Segunda Federación - Grupo V§§§18§§§E4G5
+Sweden§§§First Tier§§§Allsvenskan§§§16§§§SE1
+Sweden§§§Second Tier§§§Superettan§§§16§§§SE2
+Sweden§§§Third Tier§§§Ettan Norra§§§16§§§SE3N
+Sweden§§§Third Tier§§§Ettan Södra§§§16§§§SE3S
+Switzerland§§§First Tier§§§Super League§§§12§§§C1
+Switzerland§§§Second Tier§§§Challenge League§§§10§§§C2
+Switzerland§§§Third Tier§§§Promotion League§§§18§§§CHPR
+Switzerland§§§Fourth Tier§§§1. Liga Classic group 1§§§16§§§CHC1
+Switzerland§§§Fourth Tier§§§1. Liga Classic group 2§§§16§§§CHC2
+Switzerland§§§Fourth Tier§§§1. Liga Classic group 3§§§16§§§CHC3
+Switzerland§§§Fifth Tier§§§2. Liga interregional - Gruppe 1§§§17§§§CIR1
+Switzerland§§§Fifth Tier§§§2. Liga interregional - Gruppe 2§§§16§§§CIR2
+Switzerland§§§Fifth Tier§§§2. Liga interregional - Gruppe 3§§§16§§§CIR3
+Switzerland§§§Fifth Tier§§§2. Liga interregional - Gruppe 4§§§16§§§CIR4
+Switzerland§§§Youth league§§§Swiss U17 Elite League§§§14§§§CH17
+Switzerland§§§Youth league§§§Swiss U19 Elite League§§§14§§§C191
+Tajikistan§§§First Tier§§§Vysshaya Liga§§§10§§§TAD1
+Thailand§§§First Tier§§§Thai League§§§16§§§THA1
+Thailand§§§Second Tier§§§Thai League 2§§§18§§§THA2
+Tunisia§§§First Tier§§§Ligue Professionnelle 1§§§14§§§TUN1
+Turkey§§§First Tier§§§Süper Lig§§§20§§§TR1
+Turkey§§§Second Tier§§§1.Lig§§§18§§§TR2
+Turkey§§§Third Tier§§§2.Lig Beyaz§§§19§§§TR3A
+Turkey§§§Third Tier§§§2.Lig Kirmizi§§§19§§§TR3B
+Turkey§§§Fourth Tier§§§3.Lig Grup 1§§§15§§§TR4A
+Turkey§§§Fourth Tier§§§3.Lig Grup 2§§§15§§§TR4B
+Turkey§§§Fourth Tier§§§3.Lig Grup 3§§§15§§§TR4C
+Turkey§§§Fourth Tier§§§3.Lig Grup 4§§§15§§§TR4D
+Turkey§§§Youth league§§§U19 Süper Lig§§§22§§§T191
+Ukraine§§§First Tier§§§Premier Liga§§§16§§§UKR1
+Ukraine§§§Second Tier§§§Persha Liga§§§20§§§UKR2
+Ukraine§§§Third Tier§§§Druga Liga§§§15§§§UA3L
+United Arab Emirates§§§First Tier§§§UAE Pro League§§§14§§§UAE1
+United States§§§First Tier§§§Major League Soccer§§§29§§§MLS1
+United States§§§Second Tier§§§USL Championship§§§24§§§USL
+United States§§§Third Tier§§§MLS Next Pro§§§27§§§MNP3
+United States§§§Third Tier§§§NISA§§§9§§§NIS3
+United States§§§Third Tier§§§USL League One§§§12§§§USC3
+Uruguay§§§First Tier§§§Primera División Apertura§§§16§§§URU1
+Uruguay§§§First Tier§§§Primera División Clausura§§§16§§§URUC
+Uruguay§§§First Tier§§§Torneo Intermedio§§§16§§§URUI
+Uruguay§§§Second Tier§§§Liga de Ascenso - Fase Regular§§§14§§§URU2
+Uruguay§§§Second Tier§§§Liga de Ascenso - Torneo Competencia§§§14§§§UR2T
+Uruguay§§§Play-Offs§§§Playoffs Primera Division§§§2§§§URUP
+Uruguay§§§Play-Offs§§§Segunda División Play-off§§§2§§§URU3
+Uzbekistan§§§First Tier§§§O'zbekiston Superligasi§§§14§§§UZ1
+Uzbekistan§§§Second Tier§§§Uzbekistan Pro Liga§§§11§§§UZ2L
+Venezuela§§§First Tier§§§Liga FUTVE§§§15§§§VZ1L
+Venezuela§§§Second Tier§§§Liga FUTVE 2. Segunda Fase§§§16§§§VN2C
+Vietnam§§§First Tier§§§V.League 1§§§14§§§VIE1
+Wales§§§First Tier§§§Cymru Premier§§§12§§§WAL1
+Wales§§§Second Tier§§§Cymru North§§§16§§§WAL2
+Wales§§§Second Tier§§§Cymru South§§§16§§§WA2S

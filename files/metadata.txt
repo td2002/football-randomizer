@@ -1,0 +1,2 @@
+first_no_market_val(its_file_row_index): 7712
+num_of_total_rows: 107042
