@@ -1013,31 +1013,44 @@ def RealSeasonSelector(root):
         
     #print(comps)
     l_intro = tk.Label(win_rss, text="Select a real competition")
-    l_intro.pack()
+    l_intro.pack(expand=True)
+
+    frame_1 = tk.Frame(win_rss)
+    frame_1.pack(expand=True)
     
-    btn_country_left = tk.Button(win_rss, text="<", command=change_country_left)
-    btn_country_left.pack()
+    btn_country_left = tk.Button(frame_1, text="<", command=change_country_left)
+    btn_country_left.pack(side=tk.LEFT, expand=False)
+
+    tk.Label(frame_1, text="Country").pack(side=tk.LEFT, expand=True, fill=tk.X)
     
-    l_country = tk.Label(win_rss, text=comps[country_num][0][0])
-    l_country.pack()
+    l_country = tk.Label(win_rss, text=comps[country_num][0][0], font=('Segoe UI', 9, "bold"))
+    l_country.pack(fill=tk.X)
     
-    btn_country_right = tk.Button(win_rss, text=">", command=change_country_right)
-    btn_country_right.pack()
+    btn_country_right = tk.Button(frame_1, text=">", command=change_country_right)
+    btn_country_right.pack(side=tk.LEFT, expand=False)
+
+    frame_2 = tk.Frame(win_rss)
+    frame_2.pack(expand=True)
     
-    btn_comp_left = tk.Button(win_rss, text="<", command=change_comp_left)
-    btn_comp_left.pack()
+    btn_comp_left = tk.Button(frame_2, text="<", command=change_comp_left)
+    btn_comp_left.pack(side=tk.LEFT)
     
-    l_comp_name = tk.Label(win_rss, text=comps[country_num][comp_num][2])
+    tk.Label(frame_2, text="Competition").pack(side=tk.LEFT, expand=True, fill=tk.X)
+
+    l_comp_name = tk.Label(win_rss, text=comps[country_num][comp_num][2], font=('Segoe UI', 10, "bold"))
     l_comp_name.pack()
     
-    btn_comp_right = tk.Button(win_rss, text=">", command=change_comp_right)
-    btn_comp_right.pack()
+    btn_comp_right = tk.Button(frame_2, text=">", command=change_comp_right)
+    btn_comp_right.pack(side=tk.LEFT)
     
     l_comp_tier = tk.Label(win_rss, text=comps[country_num][comp_num][1])
     l_comp_tier.pack()
     
     btn_ok = tk.Button(win_rss, text="LOAD COMPETITION", command=select_comp)
-    btn_ok.pack()
+    btn_ok.pack(expand=True)
+
+    win_rss.update()
+    win_rss.minsize(win_rss.winfo_width(), win_rss.winfo_height())
     
     win_rss.wait_window()
     return ret_comp_id
