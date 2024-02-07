@@ -114,6 +114,10 @@ class RootWindow:
         self.widgets = []
         self.widgets_coords = []
 
+        # REFACTOR !!!
+        self.widgets_new: dict[str, tk.Widget]
+        self.widgets_new = {}
+
         self.widgets.append( tk.Label(self.frame, anchor=tk.CENTER, width=30, font=('Segoe UI', 10, 'bold')) )
         self.widgets_coords.append((135,20, tk.CENTER, "team1name"))
         self.place_widget(len(self.widgets)-1)
@@ -206,7 +210,7 @@ class RootWindow:
         self.widgets_coords.append((310,350,tk.CENTER, "btnnext"))
         self.place_widget(len(self.widgets)-1)
 
-        self.widgets.append( tk.Canvas(self.frame, width=350, height=400, highlightthickness=2, highlightbackground='Black') )
+        self.widgets.append( tk.Canvas(self.frame, width=350, height=380, highlightthickness=2, highlightbackground='Black') )
         self.widgets_coords.append((700, 20, "rktable"))
         rktable = self.widgets[len(self.widgets)-1]
         self.place_widget(len(self.widgets)-1)
@@ -231,21 +235,15 @@ class RootWindow:
         self.widgets_coords.append((340,10,tk.NE, "tablepoints"))
         self.place_widget(len(self.widgets)-1)
 
-        self.widgets.append( tk.Canvas(self.frame, width=350, height=220, highlightthickness=2, highlightbackground='Black') )
-        self.widgets_coords.append((700, 450, "rkmatches"))
-        rkmatches = self.widgets[len(self.widgets)-1]
-        self.place_widget(len(self.widgets)-1)
+        self.widgets_new["frame_pastmatches"] = tk.Frame(self.frame, width=350, height=250, highlightthickness=2, highlightbackground='Black')
+        self.widgets_new["frame_pastmatches"].place(x=700,y=420)
+        self.widgets_new["frame_pastmatches"].pack_propagate(False)
 
-        self.widgets.append( tk.Frame(rkmatches, width=350, height=220) )
-        self.widgets_coords.append((0, 0, "matchesframe"))
-        matches_win = self.widgets[len(self.widgets)-1]
-        rkmatches.create_window(0,0, window=matches_win, anchor=tk.CENTER)
+        for i in range(10):
+            self.widgets_new[f"label_pastmatch{i}"] = tk.Label(self.widgets_new["frame_pastmatches"], bg="#f0f0f0" if i%2==0 else "#d2d2d2", font=('Segoe UI', 10, "bold" if i==0 else "normal"), text="")
+            self.widgets_new[f"label_pastmatch{i}"].pack(fill=tk.BOTH, expand=1)
 
-        self.widgets.append( tk.Label(matches_win, anchor=tk.N, justify=tk.CENTER, wraplength=350, font=('Segoe UI', 9)) )
-        self.widgets_coords.append((175,0, tk.N, "matchestext"))
-        self.place_widget(len(self.widgets)-1)
-
-        self.set_mouse_y_scrolling(rkmatches)
+        #self.set_mouse_y_scrolling(rkmatches)
 
         # disabling button for match start and next
         self.widgets[self.get_widget_index("btnstart")].configure(state="disabled")
@@ -451,18 +449,16 @@ class RootWindow:
                 name = self.rankteams[ind_1].get_name()
             except:
                 name = self.rankteams[ind_2].get_name()
-            textbox = self.widgets[self.get_widget_index("matchestext")]
-            if textbox.cget("text") == "":
-                textbox.configure(text= f'{name} resting for this round')
-            else:
-                textbox.configure(text= (textbox.cget("text") + "\n" + f'{name} resting for this round'))
-            if textbox.cget("text").count('\n') > 14:
-                self.widgets[self.get_widget_index("matchesframe")].configure(height = self.widgets[self.get_widget_index("matchesframe")].cget("height")+218)
-                #self.widgets[self.get_widget_index("matchesframe")].configure(height = self.widgets[self.get_widget_index("matchesframe")].cget("height")+16)
-                self.widgets[self.get_widget_index("rkmatches")].config(scrollregion=self.widgets[self.get_widget_index("rkmatches")].bbox(tk.ALL))
-            #self.widgets[self.get_widget_index("btnnext")].config(state='normal')
+            text = f"{name} resting for this round"
+            self.update_past_matches(text)
 
             return True
+        
+    def update_past_matches(self, new_text: str):
+        for i in reversed(range(1,10)):
+            self.widgets_new[f"label_pastmatch{i}"].configure(text=self.widgets_new[f"label_pastmatch{i-1}"]["text"])
+        self.widgets_new[f"label_pastmatch{0}"].configure(text=new_text)
+
                 
 
 
@@ -493,16 +489,8 @@ class RootWindow:
             self.widgets[self.get_widget_index("btnnext")].configure(state="normal")
 
             # adding last result to box
-            textbox = self.widgets[self.get_widget_index("matchestext")]
-            if textbox.cget("text") == "":
-                textbox.configure(text= team1.get_name() + " " + str(goals_1) + " - " + str(goals_2) + " " + team2.get_name())
-            else:
-                textbox.configure(text= (textbox.cget("text") + "\n" + team1.get_name() + " " + str(goals_1) + " - " + str(goals_2) + " " + team2.get_name()))
-            if (textbox.cget("text").count('\n')+1) % 14 == 0:
-                self.widgets[self.get_widget_index("matchesframe")].configure(height = self.widgets[self.get_widget_index("matchesframe")].cget("height")+218)
-                #self.widgets[self.get_widget_index("matchesframe")].configure(height = self.widgets[self.get_widget_index("matchesframe")].cget("height")+16)
-                self.widgets[self.get_widget_index("rkmatches")].config(scrollregion=self.widgets[self.get_widget_index("rkmatches")].bbox(tk.ALL))
-            #self.widgets[self.get_widget_index("rkmatches")].config(scrollregion=self.widgets[self.get_widget_index("rkmatches")].bbox(tk.ALL))
+            text = f"{team1.get_name()} {goals_1} - {goals_2} {team2.get_name()}"
+            self.update_past_matches(text)
 
             # updating ranking in top right box
             self.rankteams.sort(key=lambda x:x.calendar_index)
@@ -964,9 +952,8 @@ def RealSeasonSelector(root):
     comp_num = 0
     ret_comp_id:str
     
-    file_comps = open("files/comps_final.txt", "r")
-    data = file_comps.readlines()
-    file_comps.close()
+    with open("files/comps_final.txt", "r") as file_comps:
+        data = file_comps.readlines()
     comps = []
     comps.append([])
 
@@ -982,7 +969,7 @@ def RealSeasonSelector(root):
             comps[-1].append(tmp)
             
     #print(comps)
-    ret_comp_id = comps[0][0][4]
+    ret_comp_id = None
     
     def change_country_left():
         nonlocal country_num
@@ -1022,34 +1009,35 @@ def RealSeasonSelector(root):
         nonlocal country_num
         nonlocal comp_num
         ret_comp_id = comps[country_num][comp_num][4]
+        win_rss.destroy()
         
     #print(comps)
     l_intro = tk.Label(win_rss, text="Select a real competition")
-    l_intro.place(relx=0.5, rely=0.05, anchor=tk.N)
+    l_intro.pack()
     
     btn_country_left = tk.Button(win_rss, text="<", command=change_country_left)
-    btn_country_left.place(relx=0.1, rely=0.3)
+    btn_country_left.pack()
     
     l_country = tk.Label(win_rss, text=comps[country_num][0][0])
-    l_country.place(relx=0.5, rely=0.3, anchor=tk.N)
+    l_country.pack()
     
     btn_country_right = tk.Button(win_rss, text=">", command=change_country_right)
-    btn_country_right.place(relx=0.9, rely=0.3, anchor=tk.NE)
+    btn_country_right.pack()
     
     btn_comp_left = tk.Button(win_rss, text="<", command=change_comp_left)
-    btn_comp_left.place(relx=0.1, rely=0.5)
+    btn_comp_left.pack()
     
     l_comp_name = tk.Label(win_rss, text=comps[country_num][comp_num][2])
-    l_comp_name.place(relx=0.5, rely=0.5, anchor=tk.N)
+    l_comp_name.pack()
     
     btn_comp_right = tk.Button(win_rss, text=">", command=change_comp_right)
-    btn_comp_right.place(relx=0.9, rely=0.5, anchor=tk.NE)
+    btn_comp_right.pack()
     
     l_comp_tier = tk.Label(win_rss, text=comps[country_num][comp_num][1])
-    l_comp_tier.place(relx=0.5, rely=0.6, anchor=tk.N)
+    l_comp_tier.pack()
     
     btn_ok = tk.Button(win_rss, text="LOAD COMPETITION", command=select_comp)
-    btn_ok.place(relx=0.5, rely=0.9, anchor=tk.N)
+    btn_ok.pack()
     
     win_rss.wait_window()
     return ret_comp_id
