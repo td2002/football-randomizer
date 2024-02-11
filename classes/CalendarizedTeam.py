@@ -1,7 +1,7 @@
-import classes.Team as Team
+import classes.Team as CTeam
 
 class CalendarizedTeam:
-    def __init__(self, team: Team.Team, calendar_index: int, played: int, wins: int, draws: int, losses: int, points: int, gf: int, ga: int):
+    def __init__(self, team: CTeam.Team, calendar_index: int, played: int, wins: int, draws: int, losses: int, points: int, gf: int, ga: int):
         self.team = team
         self.calendar_index = calendar_index
         self.played = played
@@ -18,7 +18,7 @@ class CalendarizedTeam:
             ', '.join('%s=%s' % item for item in vars(self).items())
         )
     
-    def get_team(self) -> Team:
+    def get_team(self) -> CTeam.Team:
         return self.team
     
     def get_name(self):
