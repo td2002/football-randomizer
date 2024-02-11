@@ -112,7 +112,7 @@ def get_basics_from_search_name(team_name: str, how_many: int) -> tuple[int, str
         dec = 10
 
     try:
-        all_data = prapi.ClubSearch(query=team_name).search_clubs()["results"]
+        all_data = prapi.ClubSearch(query=team_name).search_clubs_small()["results"]
         
         tmp = []
         for i in range(dec):
@@ -152,7 +152,7 @@ def get_ids_from_search_name(team_name: str, how_many: int) -> tuple[int]:
         dec = 10
 
     try:
-        all_data = prapi.ClubSearch(query=team_name).search_clubs()["results"]
+        all_data = prapi.ClubSearch(query=team_name).search_clubs_small()["results"]
         tmp = []
         for team in all_data:
             if dec > 0:

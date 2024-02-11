@@ -361,7 +361,6 @@ class Profile:
         # /html/head/meta[3]
         tmp_country_strings = str.split(get_text_by_xpath(self, "//html//head//meta[3]//@content"), ",")
         self.club_profile["customCountry"] = tmp_country_strings[-1]
-        #print("ecco: ", self.club_profile["customCountry"])
         self.club_profile["officialName"] = get_text_by_xpath(self, Clubs.Profile.NAME_OFFICIAL)
         self.club_profile["image"] = safe_split(get_text_by_xpath(self, Clubs.Profile.IMAGE), "?")[0]
         self.club_profile["legalForm"] = get_text_by_xpath(self, Clubs.Profile.LEGAL_FORM)
@@ -416,10 +415,106 @@ class Profile:
         ]
 
         return clean_response(self.club_profile)
+    
+    def get_club_profile_with_last_matches(self):
+        self._request_page()
+
+        self.club_profile["id"] = self.club_id
+        self.club_profile["url"] = get_text_by_xpath(self, Clubs.Profile.URL)
+        self._check_club_found()
+        self.club_profile["name"] = get_text_by_xpath(self, Clubs.Profile.NAME)
+        # "//header//h1//text()"
+        # //*[@id="main"]/header/div[2]/tm-quick-select-bar//div/tm-quick-select[1]/div/div/strong
+        # /html/head/meta[3]
+        tmp_country_strings = str.split(get_text_by_xpath(self, "//html//head//meta[3]//@content"), ",")
+        self.club_profile["customCountry"] = tmp_country_strings[-1]
+        self.club_profile["officialName"] = get_text_by_xpath(self, Clubs.Profile.NAME_OFFICIAL)
+        self.club_profile["image"] = safe_split(get_text_by_xpath(self, Clubs.Profile.IMAGE), "?")[0]
+        self.club_profile["legalForm"] = get_text_by_xpath(self, Clubs.Profile.LEGAL_FORM)
+        self.club_profile["addressLine1"] = get_text_by_xpath(self, Clubs.Profile.ADDRESS_LINE_1)
+        self.club_profile["addressLine2"] = get_text_by_xpath(self, Clubs.Profile.ADDRESS_LINE_2)
+        self.club_profile["addressLine3"] = get_text_by_xpath(self, Clubs.Profile.ADDRESS_LINE_3)
+        self.club_profile["tel"] = get_text_by_xpath(self, Clubs.Profile.TEL)
+        self.club_profile["fax"] = get_text_by_xpath(self, Clubs.Profile.FAX)
+        self.club_profile["website"] = get_text_by_xpath(self, Clubs.Profile.WEBSITE)
+        self.club_profile["foundedOn"] = get_text_by_xpath(self, Clubs.Profile.FOUNDED_ON)
+        self.club_profile["members"] = get_text_by_xpath(self, Clubs.Profile.MEMBERS)
+        self.club_profile["membersDate"] = remove_str(
+            get_text_by_xpath(self, Clubs.Profile.MEMBERS_DATE, pos=1),
+            ["(", "Score", ":", ")"],
+        )
+        self.club_profile["otherSports"] = safe_split(get_text_by_xpath(self, Clubs.Profile.OTHER_SPORTS), ",")
+        self.club_profile["colors"] = [
+            remove_str(e, ["background-color:", ";"]) for e in get_list_by_xpath(self, Clubs.Profile.COLORS) if "#" in e
+        ]
+
+        self.club_profile["stadiumName"] = get_text_by_xpath(self, Clubs.Profile.STADIUM_NAME)
+        self.club_profile["stadiumSeats"] = remove_str(get_text_by_xpath(self, Clubs.Profile.STADIUM_SEATS), "Seats")
+
+        self.club_profile["currentTransferRecord"] = get_text_by_xpath(self, Clubs.Profile.TRANSFER_RECORD)
+        self.club_profile["currentMarketValue"] = get_text_by_xpath(
+            self,
+            Clubs.Profile.MARKET_VALUE,
+            iloc_to=3,
+            join_str="",
+        )
+
+        self.club_profile["confederation"] = get_text_by_xpath(self, Clubs.Profile.CONFEDERATION)
+        self.club_profile["fifaWorldRanking"] = remove_str(get_text_by_xpath(self, Clubs.Profile.RANKING), "Pos")
+
+        self.club_profile["squad"] = {
+            "size": get_text_by_xpath(self, Clubs.Profile.SQUAD_SIZE),
+            "averageAge": get_text_by_xpath(self, Clubs.Profile.SQUAD_AVG_AGE),
+            "foreigners": get_text_by_xpath(self, Clubs.Profile.SQUAD_FOREIGNERS),
+            "nationalTeamPlayers": get_text_by_xpath(self, Clubs.Profile.SQUAD_NATIONAL_PLAYERS),
+        }
+
+        self.club_profile["league"] = {
+            "id": extract_from_url(get_text_by_xpath(self, Clubs.Profile.LEAGUE_ID)),
+            "name": get_text_by_xpath(self, Clubs.Profile.LEAGUE_NAME),
+            "countryID": safe_regex(get_text_by_xpath(self, Clubs.Profile.LEAGUE_COUNTRY_ID), r"(?P<id>\d)", "id"),
+            "countryName": get_text_by_xpath(self, Clubs.Profile.LEAGUE_COUNTRY_NAME),
+            "tier": get_text_by_xpath(self, Clubs.Profile.LEAGUE_TIER),
+        }
+
+        self.club_profile["historicalCrests"] = [
+            safe_split(e, "?")[0] for e in get_list_by_xpath(self, Clubs.Profile.CRESTS_HISTORICAL)
+        ]
+
+        self._request_page_last_games()
+        last_matches_colour_results : list[str] = self.page_2.xpath("//*[@id='main']/main/div[2]/div[1]/div[2]/div/table/tbody/tr[1]/td/@class")
+        last_matches_w = 0
+        last_matches_d = 0
+        last_matches_l = 0
+        last_matches_from_old_to_recent = []
+        for c in last_matches_colour_results:
+            if c.find("gruen") >= 0:
+                last_matches_w+=1
+                last_matches_from_old_to_recent.append("w")
+            elif c.find("grey") >= 0:
+                last_matches_d+=1
+                last_matches_from_old_to_recent.append("d")
+            elif c.find("rot") >= 0:
+                last_matches_l+=1
+                last_matches_from_old_to_recent.append("l")
+
+
+        self.club_profile["lastGames"] = {
+            "wins": last_matches_w,
+            "draws": last_matches_d,
+            "losses": last_matches_l,
+            "list": last_matches_from_old_to_recent
+        }
+
+        return clean_response(self.club_profile)
 
     def _request_page(self) -> None:
-        club_url = f"https://www.transfermarkt.us/-/datenfakten/verein/{self.club_id}"
+        club_url = f"https://www.transfermarkt.com/-/datenfakten/verein/{self.club_id}"
         self.page = request_url_page(url=club_url)
+
+    def _request_page_last_games(self) -> None:
+        new_url = f"https://www.transfermarkt.com/-/spielplandatum/verein/{self.club_id}"
+        self.page_2 = request_url_page(url=new_url)
 
     def _check_club_found(self) -> None:
         if not self.club_profile["url"]:
@@ -436,7 +531,7 @@ class ClubSearch:
         self.page = request_url_page(url=search_url)
         self._check_club_found()
 
-    def search_clubs(self):
+    '''def search_clubs(self):
         clubs_names: list = get_list_by_xpath(self, Clubs.Search.NAMES)
         clubs_urls: list = get_list_by_xpath(self, Clubs.Search.URLS)
         clubs_countries: list = get_list_by_xpath(self, Clubs.Search.COUNTRIES)
@@ -464,6 +559,29 @@ class ClubSearch:
                     clubs_countries,
                     clubs_squads,
                     clubs_market_values,
+                )
+            ],
+        }'''
+    
+    def search_clubs_small(self):
+        clubs_names: list = get_list_by_xpath(self, Clubs.Search.NAMES)
+        clubs_urls: list = get_list_by_xpath(self, Clubs.Search.URLS)
+        clubs_countries: list = get_list_by_xpath(self, Clubs.Search.COUNTRIES)
+        clubs_ids: list = [extract_from_url(url) for url in clubs_urls]
+
+        return {
+            "results": [
+                {
+                    "id": idx,
+                    "url": url,
+                    "name": name,
+                    "country": country
+                }
+                for idx, url, name, country in zip(
+                    clubs_ids,
+                    clubs_urls,
+                    clubs_names,
+                    clubs_countries
                 )
             ],
         }

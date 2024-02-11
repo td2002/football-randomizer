@@ -73,7 +73,7 @@ def calc_team_ovr(team: Team.Team, ishome: bool) -> int:
     else:
         age_add = -3
 
-    luck = random.gauss(0, 3.5)
+    luck = random.gauss(0, 3.4)
     print(f"luck={luck}")
 
     return ovr + stadium_add + size_add + age_add + (team.bonus) + round(luck*ovr/100)
