@@ -441,10 +441,13 @@ def format_null(x):
         return str(x)
     return "NULL"
 
-def get_random_team(badges: int, pot: int, only_club_team=True) -> Team.Team:
+def get_random_team(badges: int, pot: int, only_club_team=True):
+    return get_random_teams(badges, pot, only_club_team)[0]
+
+def get_random_teams(badges: int, pot: int, only_club_team=True, num_of_teams=1) -> list[Team.Team]:
     rand_start, rand_end = 0, -1
     div = 3.6
-    tmp = None
+    #tmp = [None]*num_of_teams
     gaussian_rands = [round(random.gauss(0,6)) for i in range(2)]
     print(f"gaussian rands = {gaussian_rands[0]}, {gaussian_rands[1]}")
 
@@ -481,11 +484,12 @@ def get_random_team(badges: int, pot: int, only_club_team=True) -> Team.Team:
     with open("files/ids_ordered.txt") as file:
         lines = file.readlines()
 
-    while tmp is None:
-        l_rand = random.randint(rand_start, rand_end)
-        selected_id = lines[l_rand].split()[0]
-        print(f"rand selected row num (id) = {l_rand} ({selected_id})")
-        tmp = get_team_from_id(int(selected_id), badges, only_club_team)
+
+
+    l_rands = random.sample(range(rand_start, rand_end+1), num_of_teams)
+    selected_ids = [lines[l_rands[i]].split()[0] for i in range(num_of_teams)]
+    print(f"rand selected row num (id) = {l_rands} ({selected_ids})")
+    tmp = [get_team_from_id(int(selected_id), badges, only_club_team) for selected_id in selected_ids]
     return tmp
 
 def get_random_team_old(badges: int, pots: list) -> Team.Team:

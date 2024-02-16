@@ -28,7 +28,7 @@ class Team:
     def get_country(self):
         return self.country
     
-    def get_img(self):
+    def get_img(self) -> bytes:
         return self.img
     
     def get_stadium_name(self):
