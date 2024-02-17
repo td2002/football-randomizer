@@ -123,18 +123,19 @@ class RootWindow:
         self.widgets_new: dict[str, tk.Widget] = {}
 
         frames_dims = {
-            "left" : (700,700),
-            "right" : (400,700),
+            "left" : (750,700),
+            "right" : (350,700),
             "top_left" : (700,150),
             "bottom_left" : (700,550),
             "top_right" : (400,400),
             "bottom_right" : (400,300),
         }
 
-        font_groups = ["main", "secondary"]
+        font_groups = ["main", "secondary", "match_live_comment"]
         font_families = {
             font_groups[0] : ["Segoe UI", "Calibri", "System"],
-            font_groups[1] : ["Arial", "System"]
+            font_groups[1] : ["Arial", "System"],
+            font_groups[2] : ["MS Sans Serif", "Small Fonts", "System"]
         }
         self.fonts : dict[str, str] = {}
 
@@ -151,7 +152,7 @@ class RootWindow:
         for font_group in font_groups:
             assign_fonts(font_group, font_families[font_group])
 
-        #print(font.families())
+        print(font.families())
 
         self.frame = tk.Frame(self.master)
         self.frame.pack(fill=tk.BOTH, expand=1)
@@ -248,40 +249,41 @@ class RootWindow:
         }
         def onCanvasConfigure(e, tag: str):
             if tag==tags["left_box"]:
-                self.widgets_new["canvas_match_info_left"].itemconfig(tag, width=self.widgets_new["canvas_match_info_left"].winfo_width())
-                self.widgets_new["frame_match_info_left"].configure(width=self.widgets_new["canvas_match_info_left"].winfo_width())
+                self.widgets_new["canvas_match_info_left"].itemconfig(tag, width=self.widgets_new["canvas_match_info_left"].winfo_width()-10)
+                #self.widgets_new["frame_match_info_left"].configure(width=self.widgets_new["canvas_match_info_left"].winfo_width())
             else:
-                self.widgets_new["canvas_match_info_right"].itemconfig(tag, width=self.widgets_new["canvas_match_info_right"].winfo_width())
-                self.widgets_new["frame_match_info_right"].configure(width=self.widgets_new["canvas_match_info_right"].winfo_width())
-            tmp = list(self.widgets_new["canvas_match_info_left"].bbox(tk.ALL))
-            self.widgets_new["canvas_match_info_left"].configure(scrollregion=tuple(tmp))
-            self.widgets_new["canvas_match_info_right"].configure(scrollregion=tuple(tmp))
+                self.widgets_new["canvas_match_info_right"].itemconfig(tag, width=self.widgets_new["canvas_match_info_right"].winfo_width()-10)
+                #self.widgets_new["frame_match_info_right"].configure(width=self.widgets_new["canvas_match_info_right"].winfo_width())
+
+            # configs on frames mess up the bbox calculations!!
+            bbox_dims = self.widgets_new["canvas_match_info_left"].bbox(tk.ALL)
+            print(f"resize bbox= {bbox_dims}")
+            self.widgets_new["canvas_match_info_left"].configure(scrollregion=bbox_dims)
+            self.widgets_new["canvas_match_info_right"].configure(scrollregion=bbox_dims)
 
 
         # bottom left frame
         self.widgets_new["frame_match_info"].rowconfigure(index=0, minsize=frames_dims["bottom_left"][1], weight=1)
-        proportions = [2,1,2]
+        proportions = [3,1,3]
         minsizes = [frames_dims["bottom_left"][0]*proportions[i]/(sum(proportions)) for i in range(3)]
         for i in [0, 2]:
-            self.widgets_new["frame_match_info"].columnconfigure(index=i, minsize=minsizes[i], weight=1)
+            self.widgets_new["frame_match_info"].columnconfigure(index=i, minsize=minsizes[i], weight=10)
         self.widgets_new["frame_match_info"].columnconfigure(index=1, minsize=minsizes[1], weight=1)
 
-        self.widgets_new["canvas_match_info_left"] = tk.Canvas(self.widgets_new["frame_match_info"], width=minsizes[0]-10-10, highlightthickness=0, borderwidth=0)
+        self.widgets_new["canvas_match_info_left"] = tk.Canvas(self.widgets_new["frame_match_info"], width=minsizes[0]-10-10, highlightthickness=5, highlightbackground="black", borderwidth=0)
         self.widgets_new["canvas_match_info_left"].grid(row=0, column=0, sticky=tk.NSEW, padx=(10,10), pady=(10,10))
         self.widgets_new["frame_match_info_left"] = tk.Frame(self.widgets_new["canvas_match_info_left"])
         self.widgets_new["canvas_match_info_left"].create_window(0,0,anchor=tk.S,window=self.widgets_new["frame_match_info_left"], tags=tags["left_box"])
         self.widgets_new["canvas_match_info_left"].bind("<Configure>", lambda e : onCanvasConfigure(e, tags["left_box"]))
-        #self.widgets_new["frame_match_info_left"].grid(row=0, column=0, sticky=tk.NSEW)
         
         self.widgets_new["frame_match_info_center"] = tk.Frame(self.widgets_new["frame_match_info"], highlightthickness=0)
         self.widgets_new["frame_match_info_center"].grid(row=0, column=1, sticky=tk.NSEW)
 
-        self.widgets_new["canvas_match_info_right"] = tk.Canvas(self.widgets_new["frame_match_info"], width=minsizes[0]-10-10, highlightthickness=0, borderwidth=0)
+        self.widgets_new["canvas_match_info_right"] = tk.Canvas(self.widgets_new["frame_match_info"], width=minsizes[0]-10-10, highlightthickness=5, highlightbackground="black", borderwidth=0)
         self.widgets_new["canvas_match_info_right"].grid(row=0, column=2, sticky=tk.NSEW, padx=(10,10), pady=(10,10))
         self.widgets_new["frame_match_info_right"] = tk.Frame(self.widgets_new["canvas_match_info_right"])
         self.widgets_new["canvas_match_info_right"].create_window(0,0,anchor=tk.S,window=self.widgets_new["frame_match_info_right"], tags=tags["right_box"])
         self.widgets_new["canvas_match_info_right"].bind("<Configure>", lambda e : onCanvasConfigure(e, tags["right_box"]))
-        #self.widgets_new["frame_match_info_left"].grid(row=0, column=0, sticky=tk.NSEW)
 
         '''self.widgets_new["frame_match_info_right"] = tk.Frame(self.widgets_new["frame_match_info"], highlightthickness=0, bg='#345678')
         self.widgets_new["frame_match_info_right"].grid(row=0, column=2, sticky=tk.NSEW)'''
@@ -511,8 +513,8 @@ class RootWindow:
 
             self.widgets_new["frame_match_info_left"].configure(bg=f"{self.match_colours[0][0]}")
             self.widgets_new["frame_match_info_right"].configure(bg=f"{self.match_colours[1][0]}")
-            self.widgets_new["canvas_match_info_left"].configure(bg=f"{self.match_colours[0][0]}")
-            self.widgets_new["canvas_match_info_right"].configure(bg=f"{self.match_colours[1][0]}")
+            self.widgets_new["canvas_match_info_left"].configure(bg=f"{self.match_colours[0][0]}", highlightbackground=f"{self.match_colours[0][1]}")
+            self.widgets_new["canvas_match_info_right"].configure(bg=f"{self.match_colours[1][0]}", highlightbackground=f"{self.match_colours[1][1]}")
 
             if self.home_adv == 1:
                 tmp = team1.get_stadium_name()
@@ -557,6 +559,13 @@ class RootWindow:
             self.widgets_new[f"label_pastmatch{i}"].configure(text=self.widgets_new[f"label_pastmatch{i-1}"]["text"])
         self.widgets_new[f"label_pastmatch{0}"].configure(text=new_text)
 
+    def update_bboxes(self):
+        # this update is needed to not forget the first label inserted (otherwise not showing)
+        self.widgets_new["frame_match_info_left"].update_idletasks()
+        tmp_bbox = self.widgets_new["canvas_match_info_left"].bbox(tk.ALL)
+        self.widgets_new["canvas_match_info_left"].configure(scrollregion=tmp_bbox)
+        self.widgets_new["canvas_match_info_right"].configure(scrollregion=tmp_bbox)
+
                 
 
     def min_event(self, team1: CalendarizedTeam.CalendarizedTeam, team2: CalendarizedTeam.CalendarizedTeam, ovr1: int, ovr2: int, g_coeff: int, subs_alr_1: int, subs_alr_2: int, slots_alr_1: int, slots_alr_2: int, goals_1: int, goals_2: int, f_time: list, s_time: list):
@@ -578,6 +587,10 @@ class RootWindow:
             s_time_next = s_time[1:]
         else:
             # means the match ended: NEED TO RE ENABLE AND HANDLE EVERYTHING HERE, AFTER THE AFTER METOD !!!
+            tk.Label(self.widgets_new["frame_match_info_left"], anchor=tk.CENTER, text="- - - - - MATCH OVER - - - - -", font=(self.fonts["match_live_comment"], 10, "bold"), bg=self.match_colours[0][0], fg=self.match_colours[0][-1]).pack(fill=tk.X)
+            tk.Label(self.widgets_new["frame_match_info_right"], anchor=tk.CENTER, text="- - - - - MATCH OVER - - - - -", font=(self.fonts["match_live_comment"], 10, "bold"), bg=self.match_colours[1][0], fg=self.match_colours[1][-1]).pack(fill=tk.X)
+            self.update_bboxes()
+
             self.widgets_new["label_info_match"].configure(text="MATCH OVER")
 
             # re-enabling the start and next match button
@@ -622,46 +635,32 @@ class RootWindow:
         #print(min, cur_ovr_1, cur_ovr_2, num_subs_1, num_slots_1, num_subs_2, num_slots_2)
 
         if min==1:
-            tk.Label(self.widgets_new["frame_match_info_left"], anchor=tk.CENTER, text="", font=(self.fonts["main"], 10, "bold"), bg=self.match_colours[0][0], fg=self.match_colours[0][-1]).pack(fill=tk.X)
-            tk.Label(self.widgets_new["frame_match_info_right"], anchor=tk.CENTER, text="", font=(self.fonts["main"], 10, "bold"), bg=self.match_colours[1][0], fg=self.match_colours[1][-1]).pack(fill=tk.X)
-            tk.Label(self.widgets_new["frame_match_info_left"], anchor=tk.CENTER, text="- - - - - MATCH START - - - - -", font=(self.fonts["main"], 10, "bold"), bg=self.match_colours[0][0], fg=self.match_colours[0][-1]).pack(fill=tk.X)
-            tk.Label(self.widgets_new["frame_match_info_right"], anchor=tk.CENTER, text="- - - - - MATCH START - - - - -", font=(self.fonts["main"], 10, "bold"), bg=self.match_colours[1][0], fg=self.match_colours[1][-1]).pack(fill=tk.X)
+            #tk.Label(self.widgets_new["frame_match_info_left"], anchor=tk.CENTER, text="", font=(self.fonts["main"], 10, "bold"), bg=self.match_colours[0][0], fg=self.match_colours[0][-1]).pack(fill=tk.X)
+            #tk.Label(self.widgets_new["frame_match_info_right"], anchor=tk.CENTER, text="", font=(self.fonts["main"], 10, "bold"), bg=self.match_colours[1][0], fg=self.match_colours[1][-1]).pack(fill=tk.X)
+            tk.Label(self.widgets_new["frame_match_info_left"], anchor=tk.CENTER, text="- - - - - MATCH START - - - - -", font=(self.fonts["match_live_comment"], 10, "bold"), bg=self.match_colours[0][0], fg=self.match_colours[0][-1]).pack(fill=tk.X)
+            tk.Label(self.widgets_new["frame_match_info_right"], anchor=tk.CENTER, text="- - - - - MATCH START - - - - -", font=(self.fonts["match_live_comment"], 10, "bold"), bg=self.match_colours[1][0], fg=self.match_colours[1][-1]).pack(fill=tk.X)
 
         if min==46 and not is_first_half:
-            tk.Label(self.widgets_new["frame_match_info_left"], anchor=tk.CENTER, text="- - - - - HALF TIME - - - - -", font=(self.fonts["main"], 10, "bold"), bg=self.match_colours[0][0], fg=self.match_colours[0][-1]).pack(fill=tk.X)
-            tk.Label(self.widgets_new["frame_match_info_right"], anchor=tk.CENTER, text="- - - - - HALF TIME - - - - -", font=(self.fonts["main"], 10, "bold"), bg=self.match_colours[1][0], fg=self.match_colours[1][-1]).pack(fill=tk.X)
+            tk.Label(self.widgets_new["frame_match_info_left"], anchor=tk.CENTER, text="- - - - - HALF TIME - - - - -", font=(self.fonts["match_live_comment"], 10, "bold"), bg=self.match_colours[0][0], fg=self.match_colours[0][-1]).pack(fill=tk.X)
+            tk.Label(self.widgets_new["frame_match_info_right"], anchor=tk.CENTER, text="- - - - - HALF TIME - - - - -", font=(self.fonts["match_live_comment"], 10, "bold"), bg=self.match_colours[1][0], fg=self.match_colours[1][-1]).pack(fill=tk.X)
 
         if which_team!=0:
-            tk.Label(self.widgets_new["frame_match_info_left"], anchor=tk.W, text=str_event if which_team==1 else "", font=(self.fonts["main"], 9), bg=self.match_colours[0][0], fg=self.match_colours[0][-1]).pack(padx=5, pady=2, fill=tk.X)
-            tk.Label(self.widgets_new["frame_match_info_right"], anchor=tk.E, text=str_event if which_team==2 else "", font=(self.fonts["main"], 9), bg=self.match_colours[1][0], fg=self.match_colours[1][-1]).pack(padx=5, pady=2, fill=tk.X)
+            
+            bold_text = False
             if num_goals_1 != goals_1:
                     #time.sleep(1)
                     self.widgets_new["label_team1goals"].configure(text=f"{num_goals_1}")
+                    bold_text = True
             if num_goals_2 != goals_2:
                     #time.sleep(1)
                     self.widgets_new["label_team2goals"].configure(text=f"{num_goals_2}")
+                    bold_text = True
+            tk.Label(self.widgets_new["frame_match_info_left"], anchor=tk.W, text=str_event if which_team==1 else "", font=(self.fonts["match_live_comment"], 7, "bold" if bold_text else ""), bg=self.match_colours[0][0], fg=self.match_colours[0][-1]).pack(padx=4, pady=2, fill=tk.X)
+            tk.Label(self.widgets_new["frame_match_info_right"], anchor=tk.E, text=str_event if which_team==2 else "", font=(self.fonts["match_live_comment"], 7, "bold" if bold_text else ""), bg=self.match_colours[1][0], fg=self.match_colours[1][-1]).pack(padx=4, pady=2, fill=tk.X)
 
-            tmp = list(self.widgets_new["canvas_match_info_left"].bbox(tk.ALL))
-            self.widgets_new["canvas_match_info_left"].configure(scrollregion=tuple(tmp))
-            self.widgets_new["canvas_match_info_right"].configure(scrollregion=tuple(tmp))
+            self.update_bboxes()
 
-            '''self.widgets_new["canvas_match_info_left"].update()
-            self.widgets_new["canvas_match_info_left"].update_idletasks()
-
-            self.widgets_new["frame_match_info_left"].update()
-            self.widgets_new["frame_match_info_right"].update_idletasks()
-            self.widgets_new["canvas_match_info_left"].update()
-            self.widgets_new["canvas_match_info_left"].update_idletasks()'''
-            
-        '''f which_team == 1:
-            tmp = tk.Label(self.widgets_new["frame_match_info_left"], anchor=tk.W, text=str_event,font=(self.fonts["main"], 9), bg=self.match_colours[0][0], fg=self.match_colours[0][-1])
-            tmp.pack(fill=tk.X)
-            
-        elif which_team == 2:
-            tmp = tk.Label(self.widgets_new["frame_match_info_right"], anchor=tk.E, text=str_event,font=(self.fonts["main"], 9), bg=self.match_colours[1][0], fg=self.match_colours[1][-1])
-            tmp.pack(fill=tk.X)'''
-            
-
+            #print(f"increase bbox= {tmp}")
         
         # this line below: recursive call to itself with updated stuff in order to do everything the right moment!
         self.frame.after(speed, (lambda : self.min_event(team1, team2, cur_ovr_1, cur_ovr_2, g_coeff, num_subs_1, num_subs_2, num_slots_1, num_slots_2, num_goals_1, num_goals_2, f_time_next, s_time_next)))
@@ -869,8 +868,6 @@ class RootWindow:
         widgets_to_forget.append(self.widgets_new["label_team2country"])
         widgets_to_forget.append(self.widgets_new["label_team1img"])
         widgets_to_forget.append(self.widgets_new["label_team2img"])
-        '''widgets_to_forget.append(self.widgets_new[self.get_widget_index("team1listcanvas")])
-        widgets_to_forget.append(self.widgets_new[self.get_widget_index("team2listcanvas")])'''
         widgets_to_forget.append(self.widgets_new["label_team1goals"])
         widgets_to_forget.append(self.widgets_new["label_team2goals"])
         widgets_to_forget.append(self.widgets_new["label_goal_separator"])
