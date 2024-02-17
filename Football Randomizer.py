@@ -13,7 +13,7 @@ CANVAS_DIMS = 100
 
 # app version
 # 0 . (functionalities implemented, general) . (code polish level) . (GUI level) . (quality of match simulation, randomness, etc)
-VER = '0.6.5z.5y.4c'
+VER = '0.6.5z.6.4d'
 
 #TODO change output when season is starting with odd amount of teams! no real feedback
 
@@ -23,8 +23,8 @@ class RootWindow:
     def set_mouse_y_scrolling_match_info(self, canvas: tk.Canvas):
 
         ############### Scroll Using Mouse Wheel ###############
-        canvas1 = self.widgets_new["canvas_match_info_left"]
-        canvas2 = self.widgets_new["canvas_match_info_right"]
+        canvas1 = self.widgets["canvas_match_info_left"]
+        canvas2 = self.widgets["canvas_match_info_right"]
         canvas1.configure(scrollregion=canvas1.bbox(tk.ALL))
         canvas2.configure(scrollregion=canvas2.bbox(tk.ALL))
 
@@ -68,7 +68,9 @@ class RootWindow:
         # colours for light/dark theme (WIP)
         self.colour_themes = {
             "dark_bg": "#222222",
-            "dark_fg": "#ffffff"
+            "dark_fg": "#ffffff",
+            "light_bg": "#f0f0f0",
+            "light_fg": "#222222",
         }
         
 
@@ -102,11 +104,6 @@ class RootWindow:
 
         self.master.configure(menu=main_menu)
 
-        #main_menu.add_command(label = "Season Tournament", command=self.season_handler)
-        #main_menu.add_command(label = "Season Tournament", command=self.season_handler)
-        #main_menu.add_command(label = "Clear All", command=self.clear_all_teams)
-        #main_menu.add_command(label = "About", command=self.about_page)
-
         # first instantiation of 2 teams min 
         self.teams = [Team.Team]
         self.teams.append(None)
@@ -120,7 +117,7 @@ class RootWindow:
         self.cur_match = 0
         self.next_match = (0, 1)
 
-        self.widgets_new: dict[str, tk.Widget] = {}
+        self.widgets: dict[str, tk.Widget] = {}
 
         frames_dims = {
             "left" : (750,700),
@@ -161,84 +158,91 @@ class RootWindow:
         self.frame.columnconfigure(index=1, weight=1)
         self.frame.rowconfigure(index=0, weight=1)
 
-        self.widgets_new["frame_left"] = tk.Frame(self.frame, highlightthickness=0)
-        self.widgets_new["frame_left"].grid(row=0, column=0, sticky=tk.NSEW)
+        self.widgets["frame_left"] = tk.Frame(self.frame, highlightthickness=0)
+        self.widgets["frame_left"].grid(row=0, column=0, sticky=tk.NSEW)
 
-        self.widgets_new["frame_right"] = tk.Frame(self.frame, highlightthickness=0)
-        self.widgets_new["frame_right"].grid(row=0, column=1, sticky=tk.NSEW)
+        self.widgets["frame_right"] = tk.Frame(self.frame, highlightthickness=0)
+        self.widgets["frame_right"].grid(row=0, column=1, sticky=tk.NSEW)
 
-        self.widgets_new["frame_left"].rowconfigure(index=0, minsize=frames_dims["top_left"][1], weight=0)
-        self.widgets_new["frame_left"].rowconfigure(index=1, minsize=frames_dims["bottom_left"][1], weight=1)
-        self.widgets_new["frame_left"].columnconfigure(index=0, minsize=frames_dims["left"][0], weight=1)
-        self.widgets_new["frame_right"].rowconfigure(index=0, minsize=frames_dims["top_right"][1], weight=1)
-        self.widgets_new["frame_right"].rowconfigure(index=1, minsize=frames_dims["bottom_right"][1], weight=0)
-        self.widgets_new["frame_right"].columnconfigure(index=0, minsize=frames_dims["right"][0], weight=1)
+        self.widgets["frame_left"].rowconfigure(index=0, minsize=frames_dims["top_left"][1], weight=0)
+        self.widgets["frame_left"].rowconfigure(index=1, minsize=frames_dims["bottom_left"][1], weight=1)
+        self.widgets["frame_left"].columnconfigure(index=0, minsize=frames_dims["left"][0], weight=1)
+        self.widgets["frame_right"].rowconfigure(index=0, minsize=frames_dims["top_right"][1], weight=1)
+        self.widgets["frame_right"].rowconfigure(index=1, minsize=frames_dims["bottom_right"][1], weight=0)
+        self.widgets["frame_right"].columnconfigure(index=0, minsize=frames_dims["right"][0], weight=1)
 
-        self.widgets_new["frame_top_info"] = tk.Frame(self.widgets_new["frame_left"], highlightthickness=0)
-        self.widgets_new["frame_top_info"].grid(row=0, column=0, sticky=tk.NSEW)
+        self.widgets["frame_top_info"] = tk.Frame(self.widgets["frame_left"], highlightthickness=0)
+        self.widgets["frame_top_info"].grid(row=0, column=0, sticky=tk.NSEW)
 
-        self.widgets_new["frame_match_info"] = tk.Frame(self.widgets_new["frame_left"], highlightthickness=0)
-        self.widgets_new["frame_match_info"].grid(row=1, column=0, sticky=tk.NSEW)
+        self.widgets["frame_match_info"] = tk.Frame(self.widgets["frame_left"], highlightthickness=0)
+        self.widgets["frame_match_info"].grid(row=1, column=0, sticky=tk.NSEW)
 
-        self.widgets_new["frame_table"] = tk.Frame(self.widgets_new["frame_right"], highlightthickness=2, highlightbackground='Black')
-        self.widgets_new["frame_table"].grid(row=0, column=0, sticky=tk.NSEW, padx=10, pady=10)
+        self.widgets["frame_table"] = tk.Frame(self.widgets["frame_right"], highlightthickness=2, highlightbackground='Black')
+        self.widgets["frame_table"].grid(row=0, column=0, sticky=tk.NSEW, padx=10, pady=10)
 
-        self.widgets_new["frame_pastmatches"] = tk.Frame(self.widgets_new["frame_right"], highlightthickness=2, highlightbackground='Black')
-        self.widgets_new["frame_pastmatches"].grid(row=1, column=0, sticky=tk.NSEW, padx=10, pady=10)
+        self.widgets["frame_pastmatches"] = tk.Frame(self.widgets["frame_right"], highlightthickness=2, highlightbackground='Black')
+        self.widgets["frame_pastmatches"].grid(row=1, column=0, sticky=tk.NSEW, padx=10, pady=10)
 
         # top left frame 
-        sizes = [frames_dims["left"][0]*0.33, 0, 0]
+        sizes = [frames_dims["left"][0]*0.34, 0, 0]
         sizes[2] = sizes[0]
         sizes[1] = frames_dims["left"][0]-sizes[0]-sizes[2]
-        self.widgets_new["frame_top_info"].columnconfigure(index=0, minsize=sizes[0], weight=1)
-        self.widgets_new["frame_top_info"].columnconfigure(index=1, minsize=sizes[1], weight=1)
-        self.widgets_new["frame_top_info"].columnconfigure(index=2, minsize=sizes[2], weight=1)
+        self.widgets["frame_top_info"].columnconfigure(index=0, minsize=sizes[0], weight=3)
+        self.widgets["frame_top_info"].columnconfigure(index=1, minsize=sizes[1], weight=1)
+        self.widgets["frame_top_info"].columnconfigure(index=2, minsize=sizes[2], weight=3)
+        self.widgets["frame_top_info"].rowconfigure(index=0, weight=1)
 
-        self.widgets_new["frame_top_info_left"] = tk.Frame(self.widgets_new["frame_top_info"], highlightthickness=0)
-        self.widgets_new["frame_top_info_left"].grid(row=0, column=0, sticky=tk.NSEW)
+        self.widgets["frame_top_info_left"] = tk.Frame(self.widgets["frame_top_info"], highlightthickness=0)
+        self.widgets["frame_top_info_left"].grid(row=0, column=0, sticky=tk.NSEW)
 
-        self.widgets_new["frame_top_info_center"] = tk.Frame(self.widgets_new["frame_top_info"], highlightthickness=0)
-        self.widgets_new["frame_top_info_center"].grid(row=0, column=1, sticky=tk.NSEW)
+        self.widgets["frame_top_info_center"] = tk.Frame(self.widgets["frame_top_info"], highlightthickness=0)
+        self.widgets["frame_top_info_center"].grid(row=0, column=1, sticky=tk.NSEW)
 
-        self.widgets_new["frame_top_info_right"] = tk.Frame(self.widgets_new["frame_top_info"], highlightthickness=0)
-        self.widgets_new["frame_top_info_right"].grid(row=0, column=2, sticky=tk.NSEW)
+        self.widgets["frame_top_info_right"] = tk.Frame(self.widgets["frame_top_info"], highlightthickness=0)
+        self.widgets["frame_top_info_right"].grid(row=0, column=2, sticky=tk.NSEW)
 
-        self.widgets_new["label_team1name"] = tk.Label(self.widgets_new["frame_top_info_left"], anchor=tk.CENTER, font=(self.fonts["main"], 10, 'bold')) 
-        self.widgets_new["label_team1name"].pack()
-        self.widgets_new["label_team1name"].pack_propagate(False)
+        for side in ["left", "right"]:
+            self.widgets[f"frame_top_info_{side}"].columnconfigure(index=0, weight=1)
+            self.widgets[f"frame_top_info_{side}"].rowconfigure(index=0, weight=1)
+            self.widgets[f"frame_top_info_{side}"].rowconfigure(index=1, weight=1)
+            self.widgets[f"frame_top_info_{side}"].rowconfigure(index=2, weight=1)
+
+        self.widgets["label_team1name"] = tk.Label(self.widgets["frame_top_info_left"], anchor=tk.CENTER, font=(self.fonts["main"], 10, 'bold')) 
+        self.widgets["label_team1name"].grid(row=0, column=0, sticky=tk.NSEW, padx=(25,0))
+
+        self.widgets["label_team1country"] = tk.Label(self.widgets["frame_top_info_left"], anchor=tk.N, font=(self.fonts["main"], 8)) 
+        self.widgets["label_team1country"].grid(row=1, column=0, sticky=tk.NSEW, padx=(25,0))
+
+        self.widgets["canvas_team1img"] = tk.Canvas(self.widgets["frame_top_info_left"], width=CANVAS_DIMS, height=CANVAS_DIMS, highlightthickness=0)
+        self.widgets["canvas_team1img"].grid(row=2, column=0, padx=(25,0))
+
+
+        self.widgets["label_team2name"] = tk.Label(self.widgets["frame_top_info_right"], anchor=tk.CENTER, font=(self.fonts["main"], 10, 'bold')) 
+        self.widgets["label_team2name"].grid(row=0, column=0, sticky=tk.NSEW, padx=(0,25))
         
-        self.widgets_new["label_team2name"] = tk.Label(self.widgets_new["frame_top_info_right"], anchor=tk.CENTER, font=(self.fonts["main"], 10, 'bold')) 
-        self.widgets_new["label_team2name"].pack()
-        self.widgets_new["label_team2name"].pack_propagate(False)
+        self.widgets["label_team2country"] = tk.Label(self.widgets["frame_top_info_right"], anchor=tk.N, font=(self.fonts["main"], 8)) 
+        self.widgets["label_team2country"].grid(row=1, column=0, sticky=tk.NSEW, padx=(0,25))
 
-        self.widgets_new["label_team1country"] = tk.Label(self.widgets_new["frame_top_info_left"], anchor=tk.CENTER, font=(self.fonts["main"], 8)) 
-        self.widgets_new["label_team1country"].pack()
-        
-        self.widgets_new["label_team2country"] = tk.Label(self.widgets_new["frame_top_info_right"], anchor=tk.CENTER, font=(self.fonts["main"], 8)) 
-        self.widgets_new["label_team2country"].pack()
+        self.widgets["canvas_team2img"] = tk.Canvas(self.widgets["frame_top_info_right"], width=CANVAS_DIMS, height=CANVAS_DIMS, highlightthickness=0)
+        self.widgets["canvas_team2img"].grid(row=2, column=0, padx=(0,25))
 
-        self.widgets_new["canvas_team1img"] = tk.Canvas(self.widgets_new["frame_top_info_left"], width=CANVAS_DIMS, height=CANVAS_DIMS, highlightthickness=0)
-        self.widgets_new["canvas_team1img"].pack()
-
-        self.widgets_new["canvas_team2img"] = tk.Canvas(self.widgets_new["frame_top_info_right"], width=CANVAS_DIMS, height=CANVAS_DIMS, highlightthickness=0)
-        self.widgets_new["canvas_team2img"].pack()
 
         for i in range(3):
-            self.widgets_new["frame_top_info_center"].columnconfigure(index=i, weight=1)
-            self.widgets_new["frame_top_info_center"].rowconfigure(index=i, weight=1)
+            self.widgets["frame_top_info_center"].columnconfigure(index=i, weight=1)
+            self.widgets["frame_top_info_center"].rowconfigure(index=i, weight=1)
 
-        self.widgets_new["label_matchstadium"] = tk.Label(self.widgets_new["frame_top_info_center"], anchor=tk.CENTER, font=(self.fonts["main"], 8), wraplength=sizes[1])
-        self.widgets_new["label_matchstadium"].grid(row=0, columnspan=3, sticky=tk.NSEW)
+        self.widgets["label_matchstadium"] = tk.Label(self.widgets["frame_top_info_center"], anchor=tk.CENTER, font=(self.fonts["main"], 8), wraplength=sizes[1])
+        self.widgets["label_matchstadium"].grid(row=0, columnspan=3, sticky=tk.NSEW)
 
-        self.widgets_new["label_info_match"] = tk.Label(self.widgets_new["frame_top_info_center"], width=1, anchor=tk.CENTER, font=(self.fonts["main"], 15, "bold"), text=self.intro_text, wraplength=sizes[1])
-        self.widgets_new["label_info_match"].grid(row=2, columnspan=3, sticky=tk.NSEW)
+        self.widgets["label_info_match"] = tk.Label(self.widgets["frame_top_info_center"], width=1, anchor=tk.CENTER, font=(self.fonts["main"], 14, "bold"), text=self.intro_text, wraplength=sizes[1])
+        self.widgets["label_info_match"].grid(row=2, columnspan=3, sticky=tk.NSEW)
 
-        self.widgets_new["label_team1goals"] = tk.Label(self.widgets_new["frame_top_info_center"], width=2, anchor=tk.CENTER, font=(self.fonts["main"], 28, "bold"))
-        self.widgets_new["label_team1goals"].grid(row=1, column=0, sticky=tk.NSEW)
-        self.widgets_new["label_goal_separator"] = tk.Label(self.widgets_new["frame_top_info_center"], anchor=tk.CENTER, font=(self.fonts["main"], 28, "bold"), text="-")
-        self.widgets_new["label_goal_separator"].grid(row=1, column=1, sticky=tk.NSEW)
-        self.widgets_new["label_team2goals"] = tk.Label(self.widgets_new["frame_top_info_center"], width=2, anchor=tk.CENTER, font=(self.fonts["main"], 28, "bold"))
-        self.widgets_new["label_team2goals"].grid(row=1, column=2, sticky=tk.NSEW)
+        self.widgets["label_team1goals"] = tk.Label(self.widgets["frame_top_info_center"], width=2, anchor=tk.CENTER, font=(self.fonts["main"], 28, "bold"))
+        self.widgets["label_team1goals"].grid(row=1, column=0, sticky=tk.NSEW)
+        self.widgets["label_goal_separator"] = tk.Label(self.widgets["frame_top_info_center"], anchor=tk.CENTER, font=(self.fonts["main"], 28, "bold"), text="-")
+        self.widgets["label_goal_separator"].grid(row=1, column=1, sticky=tk.NSEW)
+        self.widgets["label_team2goals"] = tk.Label(self.widgets["frame_top_info_center"], width=2, anchor=tk.CENTER, font=(self.fonts["main"], 28, "bold"))
+        self.widgets["label_team2goals"].grid(row=1, column=2, sticky=tk.NSEW)
 
         
         # ----------------------
@@ -249,112 +253,105 @@ class RootWindow:
         }
         def onCanvasConfigure(e, tag: str):
             if tag==tags["left_box"]:
-                self.widgets_new["canvas_match_info_left"].itemconfig(tag, width=self.widgets_new["canvas_match_info_left"].winfo_width()-10)
-                #self.widgets_new["frame_match_info_left"].configure(width=self.widgets_new["canvas_match_info_left"].winfo_width())
+                self.widgets["canvas_match_info_left"].itemconfig(tag, width=self.widgets["canvas_match_info_left"].winfo_width()-10)
+                #self.widgets["frame_match_info_left"].configure(width=self.widgets["canvas_match_info_left"].winfo_width())
             else:
-                self.widgets_new["canvas_match_info_right"].itemconfig(tag, width=self.widgets_new["canvas_match_info_right"].winfo_width()-10)
-                #self.widgets_new["frame_match_info_right"].configure(width=self.widgets_new["canvas_match_info_right"].winfo_width())
+                self.widgets["canvas_match_info_right"].itemconfig(tag, width=self.widgets["canvas_match_info_right"].winfo_width()-10)
+                #self.widgets["frame_match_info_right"].configure(width=self.widgets["canvas_match_info_right"].winfo_width())
 
             # configs on frames mess up the bbox calculations!!
-            bbox_dims = self.widgets_new["canvas_match_info_left"].bbox(tk.ALL)
+            bbox_dims = self.widgets["canvas_match_info_left"].bbox(tk.ALL)
             print(f"resize bbox= {bbox_dims}")
-            self.widgets_new["canvas_match_info_left"].configure(scrollregion=bbox_dims)
-            self.widgets_new["canvas_match_info_right"].configure(scrollregion=bbox_dims)
+            self.widgets["canvas_match_info_left"].configure(scrollregion=bbox_dims)
+            self.widgets["canvas_match_info_right"].configure(scrollregion=bbox_dims)
 
 
         # bottom left frame
-        self.widgets_new["frame_match_info"].rowconfigure(index=0, minsize=frames_dims["bottom_left"][1], weight=1)
+        self.widgets["frame_match_info"].rowconfigure(index=0, minsize=frames_dims["bottom_left"][1], weight=1)
         proportions = [3,1,3]
         minsizes = [frames_dims["bottom_left"][0]*proportions[i]/(sum(proportions)) for i in range(3)]
         for i in [0, 2]:
-            self.widgets_new["frame_match_info"].columnconfigure(index=i, minsize=minsizes[i], weight=10)
-        self.widgets_new["frame_match_info"].columnconfigure(index=1, minsize=minsizes[1], weight=1)
+            self.widgets["frame_match_info"].columnconfigure(index=i, minsize=minsizes[i], weight=10)
+        self.widgets["frame_match_info"].columnconfigure(index=1, minsize=minsizes[1], weight=1)
 
-        self.widgets_new["canvas_match_info_left"] = tk.Canvas(self.widgets_new["frame_match_info"], width=minsizes[0]-10-10, highlightthickness=5, highlightbackground="black", borderwidth=0)
-        self.widgets_new["canvas_match_info_left"].grid(row=0, column=0, sticky=tk.NSEW, padx=(10,10), pady=(10,10))
-        self.widgets_new["frame_match_info_left"] = tk.Frame(self.widgets_new["canvas_match_info_left"])
-        self.widgets_new["canvas_match_info_left"].create_window(0,0,anchor=tk.S,window=self.widgets_new["frame_match_info_left"], tags=tags["left_box"])
-        self.widgets_new["canvas_match_info_left"].bind("<Configure>", lambda e : onCanvasConfigure(e, tags["left_box"]))
+        self.widgets["canvas_match_info_left"] = tk.Canvas(self.widgets["frame_match_info"], width=minsizes[0]-10-10, highlightthickness=5, highlightbackground="black", borderwidth=0)
+        self.widgets["canvas_match_info_left"].grid(row=0, column=0, sticky=tk.NSEW, padx=(10,10), pady=(10,10))
+        self.widgets["frame_match_info_left"] = tk.Frame(self.widgets["canvas_match_info_left"])
+        self.widgets["canvas_match_info_left"].create_window(0,0,anchor=tk.S,window=self.widgets["frame_match_info_left"], tags=tags["left_box"])
+        self.widgets["canvas_match_info_left"].bind("<Configure>", lambda e : onCanvasConfigure(e, tags["left_box"]))
         
-        self.widgets_new["frame_match_info_center"] = tk.Frame(self.widgets_new["frame_match_info"], highlightthickness=0)
-        self.widgets_new["frame_match_info_center"].grid(row=0, column=1, sticky=tk.NSEW)
+        self.widgets["frame_match_info_center"] = tk.Frame(self.widgets["frame_match_info"], highlightthickness=0)
+        self.widgets["frame_match_info_center"].grid(row=0, column=1, sticky=tk.NSEW)
 
-        self.widgets_new["canvas_match_info_right"] = tk.Canvas(self.widgets_new["frame_match_info"], width=minsizes[0]-10-10, highlightthickness=5, highlightbackground="black", borderwidth=0)
-        self.widgets_new["canvas_match_info_right"].grid(row=0, column=2, sticky=tk.NSEW, padx=(10,10), pady=(10,10))
-        self.widgets_new["frame_match_info_right"] = tk.Frame(self.widgets_new["canvas_match_info_right"])
-        self.widgets_new["canvas_match_info_right"].create_window(0,0,anchor=tk.S,window=self.widgets_new["frame_match_info_right"], tags=tags["right_box"])
-        self.widgets_new["canvas_match_info_right"].bind("<Configure>", lambda e : onCanvasConfigure(e, tags["right_box"]))
+        self.widgets["canvas_match_info_right"] = tk.Canvas(self.widgets["frame_match_info"], width=minsizes[0]-10-10, highlightthickness=5, highlightbackground="black", borderwidth=0)
+        self.widgets["canvas_match_info_right"].grid(row=0, column=2, sticky=tk.NSEW, padx=(10,10), pady=(10,10))
+        self.widgets["frame_match_info_right"] = tk.Frame(self.widgets["canvas_match_info_right"])
+        self.widgets["canvas_match_info_right"].create_window(0,0,anchor=tk.S,window=self.widgets["frame_match_info_right"], tags=tags["right_box"])
+        self.widgets["canvas_match_info_right"].bind("<Configure>", lambda e : onCanvasConfigure(e, tags["right_box"]))
 
-        '''self.widgets_new["frame_match_info_right"] = tk.Frame(self.widgets_new["frame_match_info"], highlightthickness=0, bg='#345678')
-        self.widgets_new["frame_match_info_right"].grid(row=0, column=2, sticky=tk.NSEW)'''
+        self.set_mouse_y_scrolling_match_info(self.widgets["canvas_match_info_left"])
+        self.set_mouse_y_scrolling_match_info(self.widgets["canvas_match_info_right"])
 
-        '''def v_scroll(self, *args):
-            self.widgets_new["canvas_match_info_left"].yview(*args)
-            self.widgets_new["canvas_match_info_right"].yview(*args)'''
-
-        self.set_mouse_y_scrolling_match_info(self.widgets_new["canvas_match_info_left"])
-        self.set_mouse_y_scrolling_match_info(self.widgets_new["canvas_match_info_right"])
-
-        self.widgets_new["frame_match_info_center"].columnconfigure(index=0, weight=1)
+        self.widgets["frame_match_info_center"].columnconfigure(index=0, weight=1)
         weights = [1,1,0,0,0,1]
         for i in range(len(weights)):
-            self.widgets_new["frame_match_info_center"].rowconfigure(index=i,  weight=weights[i])
+            self.widgets["frame_match_info_center"].rowconfigure(index=i,  weight=weights[i])
 
-        self.widgets_new["label_minute"] = tk.Label(self.widgets_new["frame_match_info_center"], anchor=tk.CENTER, font=(self.fonts["secondary"], 15)) 
-        self.widgets_new["label_minute"].grid(row=0)
+        self.widgets["label_minute"] = tk.Label(self.widgets["frame_match_info_center"], anchor=tk.CENTER, font=(self.fonts["secondary"], 15)) 
+        self.widgets["label_minute"].grid(row=0)
 
-        self.widgets_new["button_start"] = tk.Button(self.widgets_new["frame_match_info_center"], text = "START\nMATCH", width=7, height=3, anchor=tk.CENTER, command=self.start_match, fg='darkgreen', font=(self.fonts["secondary"], 13, 'bold'), borderwidth=4)
-        self.widgets_new["button_start"].grid(row=1)
+        self.widgets["button_start"] = tk.Button(self.widgets["frame_match_info_center"], text = "START\nMATCH", width=7, height=3, anchor=tk.CENTER, command=self.start_match, fg='darkgreen', font=(self.fonts["secondary"], 13, 'bold'), borderwidth=4)
+        self.widgets["button_start"].grid(row=1)
 
-        self.widgets_new["label_fast"] = tk.Label(self.widgets_new["frame_match_info_center"], text="FAST", anchor=tk.S, font=(self.fonts["secondary"], 7))
-        self.widgets_new["label_fast"].grid(row=2)
+        self.widgets["label_fast"] = tk.Label(self.widgets["frame_match_info_center"], text="FAST", anchor=tk.S, font=(self.fonts["secondary"], 7))
+        self.widgets["label_fast"].grid(row=2)
 
-        self.widgets_new["scale_speed"] = ttk.Scale(self.widgets_new["frame_match_info_center"], from_=10, to=1000, orient='vertical', length=200, value=500)
-        self.widgets_new["scale_speed"].grid(row=3)
+        self.widgets["scale_speed"] = ttk.Scale(self.widgets["frame_match_info_center"], from_=10, to=1000, orient='vertical', length=200, value=500)
+        self.widgets["scale_speed"].grid(row=3)
 
-        self.widgets_new["label_slow"] = tk.Label(self.widgets_new["frame_match_info_center"], text="SLOW", anchor=tk.S, font=(self.fonts["secondary"], 7))
-        self.widgets_new["label_slow"].grid(row=4)
+        self.widgets["label_slow"] = tk.Label(self.widgets["frame_match_info_center"], text="SLOW", anchor=tk.S, font=(self.fonts["secondary"], 7))
+        self.widgets["label_slow"].grid(row=4)
 
-        self.widgets_new["button_next"] = tk.Button(self.widgets_new["frame_match_info_center"], text = "NEXT\nMATCH", width=7, height=3, anchor=tk.CENTER, command=self.start_next_match, fg='darkgreen', font=(self.fonts["secondary"], 13, 'bold'), borderwidth=4, state='disabled')
-        self.widgets_new["button_next"].grid(row=5)
+        self.widgets["button_next"] = tk.Button(self.widgets["frame_match_info_center"], text = "NEXT\nMATCH", width=7, height=3, anchor=tk.CENTER, command=self.start_next_match, fg='darkgreen', font=(self.fonts["secondary"], 13, 'bold'), borderwidth=4, state='disabled')
+        self.widgets["button_next"].grid(row=5)
         # ---------------------
 
         # top right frame
-        self.widgets_new["label_all_ranks"] = tk.Label(self.widgets_new["frame_table"], text="#", anchor=tk.N, justify=tk.CENTER, font=(self.fonts["main"], 8))
-        self.widgets_new["label_all_ranks"].pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
+        self.widgets["label_all_ranks"] = tk.Label(self.widgets["frame_table"], text="#", anchor=tk.N, justify=tk.CENTER, font=(self.fonts["main"], 8))
+        self.widgets["label_all_ranks"].pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
 
-        self.widgets_new["label_all_teams"] = tk.Label(self.widgets_new["frame_table"], text="TEAM", anchor=tk.N, justify=tk.CENTER, font=(self.fonts["main"], 8))
-        self.widgets_new["label_all_teams"].pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
+        self.widgets["label_all_teams"] = tk.Label(self.widgets["frame_table"], text="TEAM", anchor=tk.N, justify=tk.CENTER, font=(self.fonts["main"], 8))
+        self.widgets["label_all_teams"].pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
 
-        self.widgets_new["label_all_played"] = tk.Label(self.widgets_new["frame_table"], text="PLAYED", anchor=tk.N, justify=tk.CENTER, font=(self.fonts["main"], 8))
-        self.widgets_new["label_all_played"].pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
+        self.widgets["label_all_played"] = tk.Label(self.widgets["frame_table"], text="PLAYED", anchor=tk.N, justify=tk.CENTER, font=(self.fonts["main"], 8))
+        self.widgets["label_all_played"].pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
 
-        self.widgets_new["label_all_goals"] = tk.Label(self.widgets_new["frame_table"], text="GOALS", anchor=tk.N, justify=tk.CENTER, font=(self.fonts["main"], 8))
-        self.widgets_new["label_all_goals"].pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
+        self.widgets["label_all_goals"] = tk.Label(self.widgets["frame_table"], text="GOALS", anchor=tk.N, justify=tk.CENTER, font=(self.fonts["main"], 8))
+        self.widgets["label_all_goals"].pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
 
-        self.widgets_new["label_all_points"] = tk.Label(self.widgets_new["frame_table"], text="PTS", anchor=tk.N, justify=tk.CENTER, font=(self.fonts["main"], 8))
-        self.widgets_new["label_all_points"].pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
+        self.widgets["label_all_points"] = tk.Label(self.widgets["frame_table"], text="PTS", anchor=tk.N, justify=tk.CENTER, font=(self.fonts["main"], 8))
+        self.widgets["label_all_points"].pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
 
         # ----------------
         
         # bottom right frame
 
         for i in range(10):
-            self.widgets_new[f"label_pastmatch{i}"] = tk.Label(self.widgets_new["frame_pastmatches"], bg="#f0f0f0" if i%2==0 else "#d2d2d2", font=(self.fonts["main"], 10, "bold" if i==0 else "normal"), text="")
-            self.widgets_new[f"label_pastmatch{i}"].pack(fill=tk.BOTH, expand=1)
+            self.widgets[f"label_pastmatch{i}"] = tk.Label(self.widgets["frame_pastmatches"], bg="#f0f0f0" if i%2==0 else "#d2d2d2", font=(self.fonts["main"], 10, "bold" if i==0 else "normal"), text="")
+            self.widgets[f"label_pastmatch{i}"].pack(fill=tk.BOTH, expand=1)
 
 
         # disabling button for match start and next
-        self.widgets_new["button_start"].configure(state="disabled")
-        self.widgets_new["button_next"].configure(state="disabled")
+        self.widgets["button_start"].configure(state="disabled")
+        self.widgets["button_next"].configure(state="disabled")
 
     def change_theme(self):
-        self.widget_colour_change = list(self.widgets_new.keys())
+        self.widget_colour_change = list(self.widgets.keys())
         for x in ["frame_pastmatches"] + [f"label_pastmatch{i}" for i in range(10)]:
             self.widget_colour_change.remove(x)
 
         def change_theme_aux(widget_name: str):
-            widget = self.widgets_new[widget_name]
+            widget = self.widgets[widget_name]
             try:
                 widget.configure(bg = self.colour_themes["dark_bg"])
                 widget.configure(fg = self.colour_themes["dark_fg"])
@@ -385,7 +382,7 @@ class RootWindow:
         self.clear_all_teams()
         self.rankteams.clear()
         self.teams.clear()
-        self.widgets_new["label_info_match"].configure(text='Season loading, if not working try again...')
+        self.widgets["label_info_match"].configure(text='Season loading, if not working try again...')
         self.mode = 2
         with open(dir, 'r') as f:
             num_teams = int(f.readline())
@@ -403,7 +400,7 @@ class RootWindow:
         
         self.start_next_match()
         
-        self.widgets_new["label_info_match"].configure(text='Season loaded!')
+        self.widgets["label_info_match"].configure(text='Season loaded!')
 
         return
     
@@ -413,9 +410,10 @@ class RootWindow:
         elif self.mode == 2:
             ghost = self.init_teams_for_match(self.next_match[0], self.next_match[1])
             if ghost:
-                self.widgets_new["button_next"].configure(state='normal')
+                self.widgets["button_next"].configure(state='normal')
+                self.widgets["label_info_match"].configure(text="RESTING ROUND")
             else:
-                self.widgets_new["button_next"].configure(state='disabled')
+                self.widgets["button_next"].configure(state='disabled')
             
 
     def start_match(self):
@@ -427,10 +425,10 @@ class RootWindow:
         self.init_teams_for_match(self.next_match[0], self.next_match[1])
 
         # disabling button for match start
-        self.widgets_new["button_start"].configure(state="disabled")
-        self.widgets_new["button_next"].configure(state="disabled")
+        self.widgets["button_start"].configure(state="disabled")
+        self.widgets["button_next"].configure(state="disabled")
 
-        self.widgets_new["label_info_match"].configure(text="LIVE MATCH")
+        self.widgets["label_info_match"].configure(text="LIVE MATCH")
 
         # match simulation
         self.simulate_match_handler(team1, team2)
@@ -456,11 +454,11 @@ class RootWindow:
     
     def update_ranking(self):
         str_rank, str_teams, str_played, str_goals, str_points = self.format_table()
-        self.widgets_new["label_all_ranks"].configure(text=str_rank)
-        self.widgets_new["label_all_teams"].configure(text=str_teams)
-        self.widgets_new["label_all_played"].configure(text=str_played)
-        self.widgets_new["label_all_goals"].configure(text=str_goals)
-        self.widgets_new["label_all_points"].configure(text=str_points)
+        self.widgets["label_all_ranks"].configure(text=str_rank)
+        self.widgets["label_all_teams"].configure(text=str_teams)
+        self.widgets["label_all_played"].configure(text=str_played)
+        self.widgets["label_all_goals"].configure(text=str_goals)
+        self.widgets["label_all_points"].configure(text=str_points)
         return
     
     def set_next_match(self):
@@ -471,20 +469,20 @@ class RootWindow:
                 self.cur_match = 0
                 self.cur_day += 1
             if self.cur_day >= len(self.calendar):
-                self.widgets_new["label_info_match"].configure(text="SEASON OVER")
-                self.widgets_new["button_next"].configure(state="disabled")
+                self.widgets["label_info_match"].configure(text="SEASON OVER")
+                self.widgets["button_next"].configure(state="disabled")
             else:
                 self.next_match = self.calendar[self.cur_day][self.cur_match]
 
     def clean_match_text_boxes(self):
-            list_delete = self.widgets_new["frame_match_info_left"].winfo_children() + self.widgets_new["frame_match_info_right"].winfo_children()
+            list_delete = self.widgets["frame_match_info_left"].winfo_children() + self.widgets["frame_match_info_right"].winfo_children()
             for x in list_delete:
                 x.pack_forget()
-            tk.Frame(self.widgets_new["frame_match_info_left"]).pack()
-            tk.Frame(self.widgets_new["frame_match_info_right"]).pack()
-            self.widgets_new["frame_match_info_left"].update_idletasks()
-            self.widgets_new["frame_match_info_right"].update_idletasks()
-            list_delete = self.widgets_new["frame_match_info_left"].winfo_children() + self.widgets_new["frame_match_info_right"].winfo_children()
+            tk.Frame(self.widgets["frame_match_info_left"]).pack()
+            tk.Frame(self.widgets["frame_match_info_right"]).pack()
+            self.widgets["frame_match_info_left"].update_idletasks()
+            self.widgets["frame_match_info_right"].update_idletasks()
+            list_delete = self.widgets["frame_match_info_left"].winfo_children() + self.widgets["frame_match_info_right"].winfo_children()
             for x in list_delete:
                 x.pack_forget()
 
@@ -499,46 +497,41 @@ class RootWindow:
             team1 : Team.Team = self.rankteams[ind_1].get_team()
             team2 : Team.Team = self.rankteams[ind_2].get_team()
 
-            self.widgets_new["label_team1name"].configure(text=team1.get_name())
-            self.widgets_new["label_team2name"].configure(text=team2.get_name())
-            self.widgets_new["label_team1country"].configure(text=team1.get_country())
-            self.widgets_new["label_team2country"].configure(text=team2.get_country())
-            self.widgets_new["label_team1goals"].configure(text=str(0))
-            self.widgets_new["label_team2goals"].configure(text=str(0))
+            self.widgets["label_team1name"].configure(text=team1.get_name())
+            self.widgets["label_team2name"].configure(text=team2.get_name())
+            self.widgets["label_team1country"].configure(text=team1.get_country())
+            self.widgets["label_team2country"].configure(text=team2.get_country())
+            self.widgets["label_team1goals"].configure(text=str(0))
+            self.widgets["label_team2goals"].configure(text=str(0))
 
             self.clean_match_text_boxes()
 
             self.match_colours[0] = team1.get_colours()
             self.match_colours[1] = team2.get_colours()
 
-            self.widgets_new["frame_match_info_left"].configure(bg=f"{self.match_colours[0][0]}")
-            self.widgets_new["frame_match_info_right"].configure(bg=f"{self.match_colours[1][0]}")
-            self.widgets_new["canvas_match_info_left"].configure(bg=f"{self.match_colours[0][0]}", highlightbackground=f"{self.match_colours[0][1]}")
-            self.widgets_new["canvas_match_info_right"].configure(bg=f"{self.match_colours[1][0]}", highlightbackground=f"{self.match_colours[1][1]}")
+            self.widgets["frame_match_info_left"].configure(bg=f"{self.match_colours[0][0]}")
+            self.widgets["frame_match_info_right"].configure(bg=f"{self.match_colours[1][0]}")
+            self.widgets["canvas_match_info_left"].configure(bg=f"{self.match_colours[0][0]}", highlightbackground=f"{self.match_colours[0][1]}")
+            self.widgets["canvas_match_info_right"].configure(bg=f"{self.match_colours[1][0]}", highlightbackground=f"{self.match_colours[1][1]}")
 
             if self.home_adv == 1:
                 tmp = team1.get_stadium_name()
                 if tmp == rtapi.DEFAULT_STADIUM_NAME:
                     tmp = team1.get_name() + " " + tmp
-                self.widgets_new["label_matchstadium"].configure(text=tmp)
+                self.widgets["label_matchstadium"].configure(text=tmp)
             else:
-                self.widgets_new["label_matchstadium"].configure(text="Neutral location")
+                self.widgets["label_matchstadium"].configure(text="Neutral location")
 
             self.set_team_img(ind_1, True)
             self.set_team_img(ind_2, False)
 
-            self.widgets_new["label_info_match"].configure(text="PRE MATCH")
-            #self.widgets_new["label_minute"].lower()
+            self.widgets["label_info_match"].configure(text="PRE MATCH")
+            #self.widgets["label_minute"].lower()
 
-            str_rank, str_teams, str_played, str_goals, str_points = self.format_table()
-            self.widgets_new["label_all_ranks"].configure(text=str_rank)
-            self.widgets_new["label_all_teams"].configure(text=str_teams)
-            self.widgets_new["label_all_played"].configure(text=str_played)
-            self.widgets_new["label_all_goals"].configure(text=str_goals)
-            self.widgets_new["label_all_points"].configure(text=str_points)
+            self.update_ranking()
 
             # enabling the start button for the match to actually be played
-            self.widgets_new["button_start"].configure(state="normal")
+            self.widgets["button_start"].configure(state="normal")
 
             return False
         except:
@@ -556,21 +549,21 @@ class RootWindow:
         
     def update_past_matches(self, new_text: str):
         for i in reversed(range(1,10)):
-            self.widgets_new[f"label_pastmatch{i}"].configure(text=self.widgets_new[f"label_pastmatch{i-1}"]["text"])
-        self.widgets_new[f"label_pastmatch{0}"].configure(text=new_text)
+            self.widgets[f"label_pastmatch{i}"].configure(text=self.widgets[f"label_pastmatch{i-1}"]["text"])
+        self.widgets[f"label_pastmatch{0}"].configure(text=new_text)
 
     def update_bboxes(self):
         # this update is needed to not forget the first label inserted (otherwise not showing)
-        self.widgets_new["frame_match_info_left"].update_idletasks()
-        tmp_bbox = self.widgets_new["canvas_match_info_left"].bbox(tk.ALL)
-        self.widgets_new["canvas_match_info_left"].configure(scrollregion=tmp_bbox)
-        self.widgets_new["canvas_match_info_right"].configure(scrollregion=tmp_bbox)
+        self.widgets["frame_match_info_left"].update_idletasks()
+        tmp_bbox = self.widgets["canvas_match_info_left"].bbox(tk.ALL)
+        self.widgets["canvas_match_info_left"].configure(scrollregion=tmp_bbox)
+        self.widgets["canvas_match_info_right"].configure(scrollregion=tmp_bbox)
 
                 
 
     def min_event(self, team1: CalendarizedTeam.CalendarizedTeam, team2: CalendarizedTeam.CalendarizedTeam, ovr1: int, ovr2: int, g_coeff: int, subs_alr_1: int, subs_alr_2: int, slots_alr_1: int, slots_alr_2: int, goals_1: int, goals_2: int, f_time: list, s_time: list):
 
-        speed = int(self.widgets_new["scale_speed"].get())
+        speed = int(self.widgets["scale_speed"].get())
         
         is_first_half = True
         f_time_next = []
@@ -587,16 +580,16 @@ class RootWindow:
             s_time_next = s_time[1:]
         else:
             # means the match ended: NEED TO RE ENABLE AND HANDLE EVERYTHING HERE, AFTER THE AFTER METOD !!!
-            tk.Label(self.widgets_new["frame_match_info_left"], anchor=tk.CENTER, text="- - - - - MATCH OVER - - - - -", font=(self.fonts["match_live_comment"], 10, "bold"), bg=self.match_colours[0][0], fg=self.match_colours[0][-1]).pack(fill=tk.X)
-            tk.Label(self.widgets_new["frame_match_info_right"], anchor=tk.CENTER, text="- - - - - MATCH OVER - - - - -", font=(self.fonts["match_live_comment"], 10, "bold"), bg=self.match_colours[1][0], fg=self.match_colours[1][-1]).pack(fill=tk.X)
+            tk.Label(self.widgets["frame_match_info_left"], anchor=tk.CENTER, text="- - - - - MATCH OVER - - - - -", font=(self.fonts["match_live_comment"], 10, "bold"), bg=self.match_colours[0][0], fg=self.match_colours[0][-1]).pack(fill=tk.X)
+            tk.Label(self.widgets["frame_match_info_right"], anchor=tk.CENTER, text="- - - - - MATCH OVER - - - - -", font=(self.fonts["match_live_comment"], 10, "bold"), bg=self.match_colours[1][0], fg=self.match_colours[1][-1]).pack(fill=tk.X)
             self.update_bboxes()
 
-            self.widgets_new["label_info_match"].configure(text="MATCH OVER")
+            self.widgets["label_info_match"].configure(text="MATCH OVER")
 
             # re-enabling the start and next match button
             if self.mode != 2:
-                self.widgets_new["button_start"].configure(state="normal")
-            self.widgets_new["button_next"].configure(state="normal")
+                self.widgets["button_start"].configure(state="normal")
+            self.widgets["button_next"].configure(state="normal")
 
             # adding last result to box
             text = f"{team1.get_name()} {goals_1} - {goals_2} {team2.get_name()}"
@@ -618,7 +611,7 @@ class RootWindow:
             min_str = str(45) + "+" + str(min-45) + "'"
         elif not is_first_half and min > 90:
             min_str = str(90) + "+" + str(min-90) + "'"
-        self.widgets_new["label_minute"].configure(text=min_str)
+        self.widgets["label_minute"].configure(text=min_str)
 
         tmp_subs_1, tmp_subs_2, tmp_slots_1, tmp_slots_2, tmp_less_1, tmp_less_2, num_goals_1, num_goals_2, ovr_change_1, ovr_change_2, str_event, which_team = frapi.minute_event(min, is_first_half, ovr1, ovr2, g_coeff, subs_alr_1, subs_alr_2, slots_alr_1, slots_alr_2, goals_1, goals_2)
         
@@ -635,28 +628,28 @@ class RootWindow:
         #print(min, cur_ovr_1, cur_ovr_2, num_subs_1, num_slots_1, num_subs_2, num_slots_2)
 
         if min==1:
-            #tk.Label(self.widgets_new["frame_match_info_left"], anchor=tk.CENTER, text="", font=(self.fonts["main"], 10, "bold"), bg=self.match_colours[0][0], fg=self.match_colours[0][-1]).pack(fill=tk.X)
-            #tk.Label(self.widgets_new["frame_match_info_right"], anchor=tk.CENTER, text="", font=(self.fonts["main"], 10, "bold"), bg=self.match_colours[1][0], fg=self.match_colours[1][-1]).pack(fill=tk.X)
-            tk.Label(self.widgets_new["frame_match_info_left"], anchor=tk.CENTER, text="- - - - - MATCH START - - - - -", font=(self.fonts["match_live_comment"], 10, "bold"), bg=self.match_colours[0][0], fg=self.match_colours[0][-1]).pack(fill=tk.X)
-            tk.Label(self.widgets_new["frame_match_info_right"], anchor=tk.CENTER, text="- - - - - MATCH START - - - - -", font=(self.fonts["match_live_comment"], 10, "bold"), bg=self.match_colours[1][0], fg=self.match_colours[1][-1]).pack(fill=tk.X)
+            #tk.Label(self.widgets["frame_match_info_left"], anchor=tk.CENTER, text="", font=(self.fonts["main"], 10, "bold"), bg=self.match_colours[0][0], fg=self.match_colours[0][-1]).pack(fill=tk.X)
+            #tk.Label(self.widgets["frame_match_info_right"], anchor=tk.CENTER, text="", font=(self.fonts["main"], 10, "bold"), bg=self.match_colours[1][0], fg=self.match_colours[1][-1]).pack(fill=tk.X)
+            tk.Label(self.widgets["frame_match_info_left"], anchor=tk.CENTER, text="- - - - - MATCH START - - - - -", font=(self.fonts["match_live_comment"], 10, "bold"), bg=self.match_colours[0][0], fg=self.match_colours[0][-1]).pack(fill=tk.X)
+            tk.Label(self.widgets["frame_match_info_right"], anchor=tk.CENTER, text="- - - - - MATCH START - - - - -", font=(self.fonts["match_live_comment"], 10, "bold"), bg=self.match_colours[1][0], fg=self.match_colours[1][-1]).pack(fill=tk.X)
 
         if min==46 and not is_first_half:
-            tk.Label(self.widgets_new["frame_match_info_left"], anchor=tk.CENTER, text="- - - - - HALF TIME - - - - -", font=(self.fonts["match_live_comment"], 10, "bold"), bg=self.match_colours[0][0], fg=self.match_colours[0][-1]).pack(fill=tk.X)
-            tk.Label(self.widgets_new["frame_match_info_right"], anchor=tk.CENTER, text="- - - - - HALF TIME - - - - -", font=(self.fonts["match_live_comment"], 10, "bold"), bg=self.match_colours[1][0], fg=self.match_colours[1][-1]).pack(fill=tk.X)
+            tk.Label(self.widgets["frame_match_info_left"], anchor=tk.CENTER, text="- - - - - HALF TIME - - - - -", font=(self.fonts["match_live_comment"], 10, "bold"), bg=self.match_colours[0][0], fg=self.match_colours[0][-1]).pack(fill=tk.X)
+            tk.Label(self.widgets["frame_match_info_right"], anchor=tk.CENTER, text="- - - - - HALF TIME - - - - -", font=(self.fonts["match_live_comment"], 10, "bold"), bg=self.match_colours[1][0], fg=self.match_colours[1][-1]).pack(fill=tk.X)
 
         if which_team!=0:
             
             bold_text = False
             if num_goals_1 != goals_1:
                     #time.sleep(1)
-                    self.widgets_new["label_team1goals"].configure(text=f"{num_goals_1}")
+                    self.widgets["label_team1goals"].configure(text=f"{num_goals_1}")
                     bold_text = True
             if num_goals_2 != goals_2:
                     #time.sleep(1)
-                    self.widgets_new["label_team2goals"].configure(text=f"{num_goals_2}")
+                    self.widgets["label_team2goals"].configure(text=f"{num_goals_2}")
                     bold_text = True
-            tk.Label(self.widgets_new["frame_match_info_left"], anchor=tk.W, text=str_event if which_team==1 else "", font=(self.fonts["match_live_comment"], 7, "bold" if bold_text else ""), bg=self.match_colours[0][0], fg=self.match_colours[0][-1]).pack(padx=4, pady=2, fill=tk.X)
-            tk.Label(self.widgets_new["frame_match_info_right"], anchor=tk.E, text=str_event if which_team==2 else "", font=(self.fonts["match_live_comment"], 7, "bold" if bold_text else ""), bg=self.match_colours[1][0], fg=self.match_colours[1][-1]).pack(padx=4, pady=2, fill=tk.X)
+            tk.Label(self.widgets["frame_match_info_left"], anchor=tk.W, text=str_event if which_team==1 else "", font=(self.fonts["match_live_comment"], 7, "bold" if bold_text else ""), bg=self.match_colours[0][0], fg=self.match_colours[0][-1]).pack(padx=4, pady=2, fill=tk.X)
+            tk.Label(self.widgets["frame_match_info_right"], anchor=tk.E, text=str_event if which_team==2 else "", font=(self.fonts["match_live_comment"], 7, "bold" if bold_text else ""), bg=self.match_colours[1][0], fg=self.match_colours[1][-1]).pack(padx=4, pady=2, fill=tk.X)
 
             self.update_bboxes()
 
@@ -737,9 +730,9 @@ class RootWindow:
             img = img.resize((CANVAS_DIMS,CANVAS_DIMS))
         imgtk = itk.PhotoImage(img)
         
-        self.widgets_new[str_widget].create_image(CANVAS_DIMS/2,CANVAS_DIMS/2,anchor=tk.CENTER,image=imgtk)
-        self.widgets_new[str_widget].imagelist = []
-        self.widgets_new[str_widget].imagelist.append(imgtk)
+        self.widgets[str_widget].create_image(CANVAS_DIMS/2,CANVAS_DIMS/2,anchor=tk.CENTER,image=imgtk)
+        self.widgets[str_widget].imagelist = []
+        self.widgets[str_widget].imagelist.append(imgtk)
 
     def set_friendly_gui(self, t1: Team.Team, t2: Team.Team):
 
@@ -792,9 +785,13 @@ class RootWindow:
         ghost = self.init_teams_for_match(self.next_match[0], self.next_match[1])
 
         if ghost:
-            self.widgets_new["button_next"].configure(state='normal')
+            self.widgets["button_next"].configure(state='normal')
+            self.widgets["label_info_match"].configure(text="RESTING ROUND")
         else:
-            self.widgets_new["button_next"].configure(state='disabled')
+            self.widgets["button_next"].configure(state='disabled')
+
+        self.update_ranking()
+
         return
     
 
@@ -847,7 +844,7 @@ class RootWindow:
 
     def clear_all_teams(self):
         self.mode = 0
-        '''for w in self.widgets_new:
+        '''for w in self.widgets:
             w.place_forget()'''
         self.teams.clear()
         self.teams.append(None)
@@ -859,26 +856,35 @@ class RootWindow:
         self.calendar.clear()
         self.cur_day=0
         self.cur_match=0
-        self.widgets_new["label_info_match"].configure(text=self.intro_text)
-        #self.widgets_new["label_info_match"].lift()
-        widgets_to_forget = []
-        widgets_to_forget.append(self.widgets_new["label_team1name"])
-        widgets_to_forget.append(self.widgets_new["label_team2name"])
-        widgets_to_forget.append(self.widgets_new["label_team1country"])
-        widgets_to_forget.append(self.widgets_new["label_team2country"])
-        widgets_to_forget.append(self.widgets_new["label_team1img"])
-        widgets_to_forget.append(self.widgets_new["label_team2img"])
-        widgets_to_forget.append(self.widgets_new["label_team1goals"])
-        widgets_to_forget.append(self.widgets_new["label_team2goals"])
-        widgets_to_forget.append(self.widgets_new["label_goal_separator"])
-        widgets_to_forget.append(self.widgets_new["label_matchstadium"])
+        self.widgets["label_info_match"].configure(text=self.intro_text)
+        #self.widgets["label_info_match"].lift()
+        widgets_to_forget : list[tk.Widget] = []
+        widgets_to_forget.append(self.widgets["label_team1name"])
+        widgets_to_forget.append(self.widgets["label_team2name"])
+        widgets_to_forget.append(self.widgets["label_team1country"])
+        widgets_to_forget.append(self.widgets["label_team2country"])
+        widgets_to_forget.append(self.widgets["canvas_team1img"])
+        widgets_to_forget.append(self.widgets["canvas_team2img"])
+        widgets_to_forget.append(self.widgets["label_team1goals"])
+        widgets_to_forget.append(self.widgets["label_team2goals"])
+        #widgets_to_forget.append(self.widgets["label_goal_separator"])
+        widgets_to_forget.append(self.widgets["label_matchstadium"])
+
+        self.widgets["frame_match_info_left"].configure(bg=f"{self.colour_themes['light_bg']}")
+        self.widgets["frame_match_info_right"].configure(bg=f"{self.colour_themes['light_bg']}")
+        self.widgets["canvas_match_info_left"].configure(bg=f"{self.colour_themes['light_bg']}", highlightbackground=f"{self.colour_themes['light_fg']}")
+        self.widgets["canvas_match_info_right"].configure(bg=f"{self.colour_themes['light_bg']}", highlightbackground=f"{self.colour_themes['light_fg']}")
 
         for w in widgets_to_forget:
-            w.place_forget()
+            try:
+                w.pack_forget()
+                w.grid_remove()
+            except:
+                print(f"error during removal of widget {w.winfo_name()}")
 
         # disabling button for match start and next
-        self.widgets_new["button_start"].configure(state="disabled")
-        self.widgets_new["button_next"].configure(state="disabled")
+        self.widgets["button_start"].configure(state="disabled")
+        self.widgets["button_next"].configure(state="disabled")
 
     def invert_teams(self):
         #self.teams[0], self.teams[1] = self.teams[1], self.teams[0]
