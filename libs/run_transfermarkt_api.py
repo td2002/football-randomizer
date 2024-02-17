@@ -479,18 +479,23 @@ def get_random_teams(badges: int, pot: int, only_club_team=True, num_of_teams=1)
         case 8:
             with open("files/metadata.txt") as file_tmp:
                 rand_start, rand_end = int(file_tmp.readline().split()[1]), int(file_tmp.readline().split()[1])
+
+    rand_start, rand_end = round(rand_start), round(rand_end)
     
     print(f"rand start, end = {rand_start}, {rand_end}")
     with open("files/ids_ordered.txt") as file:
         lines = file.readlines()
 
+    range_ = list(range(rand_start, rand_end+1))
+    random.shuffle(range_)
+    shuffled_range_iter = iter(range_)
 
-
-    l_rands = random.sample(range(rand_start, rand_end+1), num_of_teams)
-    selected_ids = [lines[l_rands[i]].split()[0] for i in range(num_of_teams)]
-    print(f"rand selected row num (id) = {l_rands} ({selected_ids})")
-    tmp = [get_team_from_id(int(selected_id), badges, only_club_team) for selected_id in selected_ids]
-    return tmp
+    res = [None] * num_of_teams
+    for i in range(num_of_teams):
+        while res[i] is None:
+            res[i] = get_team_from_id(int(lines[int(next(shuffled_range_iter))].split()[0]), badges, only_club_team)
+        i+=1
+    return res
 
 def get_random_team_old(badges: int, pots: list) -> Team.Team:
 
