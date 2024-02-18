@@ -9,7 +9,7 @@ from PIL import ImageTk as itk, Image
 import threading
 
 # dims for img canvas
-CANVAS_DIMS = 100
+CANVAS_DIMS = 150
 
 # app version
 # 0 . (functionalities implemented, general) . (code polish level) . (GUI level) . (quality of match simulation, randomness, etc)

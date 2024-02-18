@@ -3,3 +3,4 @@ __pycache__/
 
 # ignore test gui
 *Test.py
+*test*

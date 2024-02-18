@@ -2,7 +2,7 @@ class Team:
     
     ENCODING = 'utf-8'
 
-    def __init__(self, id: int, name: str, official_name: str, country: str, league, tier, market_val, img: bytes, colours: str, stadium_name: str, stadium_seats: int, squad: int, avg_age: float, fifa_rank: int, bonus: int):
+    def __init__(self, id: int, name: str, official_name: str, country: str, league, tier, market_val: int, img: bytes, colours: str, stadium_name: str, stadium_seats: int, squad: int, avg_age: float, fifa_rank: int, bonus: int):
         self.id = id
         self.name = name
         self.official_name = official_name
@@ -33,6 +33,9 @@ class Team:
     
     def get_stadium_name(self):
         return self.stadium_name
+    
+    def get_market_val(self):
+        return self.market_val
     
     # last colour of the returned list is the color the font on this should take (b/w)
     def get_colours(self) -> list[str]:

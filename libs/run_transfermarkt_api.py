@@ -449,7 +449,7 @@ def get_random_teams(badges: int, pot: int, only_club_team=True, num_of_teams=1)
     div = 3.6
     #tmp = [None]*num_of_teams
     gaussian_rands = [round(random.gauss(0,6)) for i in range(2)]
-    print(f"gaussian rands = {gaussian_rands[0]}, {gaussian_rands[1]}")
+    #print(f"gaussian rands = {gaussian_rands[0]}, {gaussian_rands[1]}")
 
     match pot:
         case 0:
@@ -482,7 +482,7 @@ def get_random_teams(badges: int, pot: int, only_club_team=True, num_of_teams=1)
 
     rand_start, rand_end = round(rand_start), round(rand_end)
     
-    print(f"rand start, end = {rand_start}, {rand_end}")
+    #print(f"rand start, end = {rand_start}, {rand_end}")
     with open("files/ids_ordered.txt") as file:
         lines = file.readlines()
 
