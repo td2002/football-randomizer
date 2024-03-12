@@ -1,6 +1,7 @@
-import classes.Team as Team, classes.CalendarizedTeam as CalendarizedTeam
+import classes.Team as Team, classes.CalendarizedTeam as CalendarizedTeam, classes.FormatLabel as FormatLabel
 import libs.football_randomizer_api as frapi
 import libs.run_transfermarkt_api as rtapi
+import libs.betting_handler_api as bhapi
 import random
 import tkinter as tk
 from tkinter import ttk, filedialog, font
@@ -13,7 +14,7 @@ CANVAS_DIMS = 150
 
 # app version
 # 0 . (functionalities implemented, general) . (code polish level) . (GUI level) . (quality of match simulation, randomness, etc)
-VER = '0.6.5z.6.4d'
+VER = '0.7.5z.6b.4e'
 
 #TODO change output when season is starting with odd amount of teams! no real feedback
 
@@ -46,7 +47,7 @@ class RootWindow:
 
         return
     
-    def __init__(self, master):
+    def __init__(self, master: tk.Tk):
 
         self.intro_text = "START SIMULATING USING THE MENU ABOVE"
         # mode: 0 for init, 1 for single match, 2 for season
@@ -109,6 +110,11 @@ class RootWindow:
         self.teams.append(None)
         self.teams.append(None)
 
+        self.ovrs = [{
+            "real" : int,
+            "bet" : int
+        } for i in range(2)]
+
         # first instantiation of calendarized teams for rankings
         self.rankteams = [CalendarizedTeam.CalendarizedTeam] * 2
 
@@ -117,15 +123,17 @@ class RootWindow:
         self.cur_match = 0
         self.next_match = (0, 1)
 
+        self.is_gui_init_needed = True
+
         self.widgets: dict[str, tk.Widget] = {}
 
         frames_dims = {
             "left" : (750,700),
             "right" : (350,700),
             "top_left" : (700,150),
-            "bottom_left" : (700,550),
-            "top_right" : (400,400),
-            "bottom_right" : (400,300),
+            "bottom_left" : (700,450),
+            "top_right" : (400,350),
+            "bottom_right" : (400,250),
         }
 
         font_groups = ["main", "secondary", "match_live_comment"]
@@ -157,12 +165,16 @@ class RootWindow:
         self.frame.columnconfigure(index=0, weight=2)
         self.frame.columnconfigure(index=1, weight=1)
         self.frame.rowconfigure(index=0, weight=1)
+        self.frame.rowconfigure(index=1, weight=0)
 
         self.widgets["frame_left"] = tk.Frame(self.frame, highlightthickness=0)
         self.widgets["frame_left"].grid(row=0, column=0, sticky=tk.NSEW)
 
         self.widgets["frame_right"] = tk.Frame(self.frame, highlightthickness=0)
         self.widgets["frame_right"].grid(row=0, column=1, sticky=tk.NSEW)
+
+        self.widgets["frame_bottom"] = tk.Frame(self.frame, highlightthickness=5, highlightbackground="brown")
+        self.widgets["frame_bottom"].grid(row=1, column=0, columnspan=2, sticky=tk.NSEW, padx=10, pady=(5,10))
 
         self.widgets["frame_left"].rowconfigure(index=0, minsize=frames_dims["top_left"][1], weight=0)
         self.widgets["frame_left"].rowconfigure(index=1, minsize=frames_dims["bottom_left"][1], weight=1)
@@ -177,10 +189,10 @@ class RootWindow:
         self.widgets["frame_match_info"] = tk.Frame(self.widgets["frame_left"], highlightthickness=0)
         self.widgets["frame_match_info"].grid(row=1, column=0, sticky=tk.NSEW)
 
-        self.widgets["frame_table"] = tk.Frame(self.widgets["frame_right"], highlightthickness=2, highlightbackground='Black')
+        self.widgets["frame_table"] = tk.Frame(self.widgets["frame_right"], highlightthickness=5, highlightbackground="black")
         self.widgets["frame_table"].grid(row=0, column=0, sticky=tk.NSEW, padx=10, pady=10)
 
-        self.widgets["frame_pastmatches"] = tk.Frame(self.widgets["frame_right"], highlightthickness=2, highlightbackground='Black')
+        self.widgets["frame_pastmatches"] = tk.Frame(self.widgets["frame_right"], highlightthickness=5, highlightbackground="black")
         self.widgets["frame_pastmatches"].grid(row=1, column=0, sticky=tk.NSEW, padx=10, pady=10)
 
         # top left frame 
@@ -234,7 +246,7 @@ class RootWindow:
         self.widgets["label_matchstadium"] = tk.Label(self.widgets["frame_top_info_center"], anchor=tk.CENTER, font=(self.fonts["main"], 8), wraplength=sizes[1])
         self.widgets["label_matchstadium"].grid(row=0, columnspan=3, sticky=tk.NSEW)
 
-        self.widgets["label_info_match"] = tk.Label(self.widgets["frame_top_info_center"], width=1, anchor=tk.CENTER, font=(self.fonts["main"], 14, "bold"), text=self.intro_text, wraplength=sizes[1])
+        self.widgets["label_info_match"] = tk.Label(self.widgets["frame_top_info_center"], width=10, anchor=tk.CENTER, font=(self.fonts["main"], 14, "bold"), text=self.intro_text, wraplength=sizes[1])
         self.widgets["label_info_match"].grid(row=2, columnspan=3, sticky=tk.NSEW)
 
         self.widgets["label_team1goals"] = tk.Label(self.widgets["frame_top_info_center"], width=2, anchor=tk.CENTER, font=(self.fonts["main"], 28, "bold"))
@@ -340,10 +352,103 @@ class RootWindow:
             self.widgets[f"label_pastmatch{i}"] = tk.Label(self.widgets["frame_pastmatches"], bg="#f0f0f0" if i%2==0 else "#d2d2d2", font=(self.fonts["main"], 10, "bold" if i==0 else "normal"), text="")
             self.widgets[f"label_pastmatch{i}"].pack(fill=tk.BOTH, expand=1)
 
+        # ----------------
+        
+        # bottom frame (betting)
+        for i in range(6):
+            self.widgets["frame_bottom"].columnconfigure(index=i, weight=1)
+        self.widgets["frame_bottom"].columnconfigure(index=2, weight=0)
+        for i in range(3):
+            self.widgets["frame_bottom"].rowconfigure(index=i, weight=1)       
+
+        self.widgets["label_current_money_text"] = tk.Label(self.widgets["frame_bottom"], text="Current money amount", anchor=tk.S)
+        self.widgets["label_current_money_text"].grid(row=0, column=0, sticky=tk.NSEW)
+        
+        self.current_money = tk.DoubleVar(value=bhapi.get_init_amount())
+        self.widgets["label_current_money"] = FormatLabel.FormatLabel(self.widgets["frame_bottom"], textvariable=self.current_money, format="🤯 {:.2f}", font=(self.fonts["main"], 18, "bold"), anchor=tk.N)
+        self.widgets["label_current_money"].grid(row=1, column=0, rowspan=2, sticky=tk.NSEW)
+
+        self.widgets["label_odds_text"] = tk.Label(self.widgets["frame_bottom"], text="Match odds", anchor=tk.E)
+        self.widgets["label_odds_text"].grid(row=1, column=2, sticky=tk.NSEW, ipadx=10)
+
+        self.widgets["label_bet_text"] = tk.Label(self.widgets["frame_bottom"], text="Your bets", anchor=tk.E)
+        self.widgets["label_bet_text"].grid(row=2, column=2, sticky=tk.NSEW, ipadx=10)
+
+        names = ["w", "d", "l"]
+        texts = ["Home win", "Draw", "Away win"]
+        for i in range(3):
+            self.widgets[f"label_odds_text_{names[i]}"] = tk.Label(self.widgets["frame_bottom"], text=texts[i])
+            self.widgets[f"label_odds_text_{names[i]}"].grid(row=0, column=3+i, sticky=tk.NSEW)
+        
+        self.bet_vals = [tk.DoubleVar(), tk.DoubleVar(), tk.DoubleVar()]
+        for i in range(3):
+            self.widgets[f"label_bet_{names[i]}"] = tk.Label(self.widgets["frame_bottom"], textvariable=self.bet_vals[i], font=(self.fonts["secondary"], 11, "bold"))
+            self.widgets[f"label_bet_{names[i]}"].grid(row=1, column=3+i, sticky=tk.NSEW)
+            self.widgets[f"label_bet_{names[i]}"].bind_all("<KeyPress>", self.check_and_update_amount)
+
+        self.widgets["button_placebet"] = tk.Button(self.widgets["frame_bottom"], text="Place bets", state="disabled", command=self.place_bets, font=(self.fonts["main"], 15, "normal"))
+        self.widgets["button_placebet"].grid(row=0, column=1, rowspan=3, sticky=tk.NSEW, padx=15, pady=15)
+
+        vcmd = (self.widgets["frame_bottom"].register(self.callback))
+        self.bet_entries = [tk.StringVar(), tk.StringVar(), tk.StringVar()]
+        for i in range(3):
+            self.widgets[f"entry_bet_{names[i]}"] = tk.Entry(self.widgets["frame_bottom"], validate="all", validatecommand=(vcmd, "%P"), state="disabled", textvariable=self.bet_entries[i], justify=tk.CENTER)
+            self.widgets[f"entry_bet_{names[i]}"].grid(row=2, column=3+i, sticky=tk.NSEW, padx=10, pady=(0,5))
+
+        # min window size set dynamically
+        self.master.update_idletasks()
+        print(f"dim min = {self.master.winfo_width()} x {self.master.winfo_height()}")
+        self.master.minsize(self.master.winfo_width(), self.master.winfo_height())
 
         # disabling button for match start and next
         self.widgets["button_start"].configure(state="disabled")
         self.widgets["button_next"].configure(state="disabled")
+
+    def get_bet_entries_floats(self) -> list[float]:
+        return [float(x.get()) if x.get()!="" else 0 for x in self.bet_entries]
+
+    def check_and_update_amount(self, e:tk.Event):
+        tot = round(sum(self.get_bet_entries_floats()), 2)
+        print(tot)
+        if tot > self.current_money.get():
+            self.widgets["button_placebet"].configure(state="disabled")
+        else:
+            self.widgets["button_placebet"].configure(state="normal")
+
+    def callback(self, P:str):
+        if P == "": return True
+        try:
+            float(P)
+        except:
+            return False
+        try:
+            parts = P.split(".")
+            if len(parts[1]) > 2: return False
+            return True
+        except:
+            return True
+
+        # ----------------
+
+    def place_bets(self):
+        self.current_money.set(round( self.current_money.get() - sum(self.get_bet_entries_floats()) , 2))
+        self.close_betting_widgets()
+    
+    def open_betting_widgets(self):
+        self.change_betting_widgets(True)
+
+    def close_betting_widgets(self):
+        self.change_betting_widgets(False)
+
+    def change_betting_widgets(self, to_open:bool):
+        tmp = "normal" if to_open else "disabled"
+        if to_open:
+            for e in self.bet_entries:
+                e.set("")
+        self.widgets["button_placebet"].configure(state=tmp)
+        names = ["w", "d", "l"]
+        for i in range(3):
+            self.widgets[f"entry_bet_{names[i]}"].configure(state=tmp)
 
     def change_theme(self):
         self.widget_colour_change = list(self.widgets.keys())
@@ -422,11 +527,13 @@ class RootWindow:
         team1 = self.rankteams[self.next_match[0]]
         team2 = self.rankteams[self.next_match[1]]
         
-        self.init_teams_for_match(self.next_match[0], self.next_match[1])
+        '''if self.is_gui_init_needed:
+            self.init_teams_for_match(self.next_match[0], self.next_match[1])'''
 
         # disabling button for match start
         self.widgets["button_start"].configure(state="disabled")
         self.widgets["button_next"].configure(state="disabled")
+        self.close_betting_widgets()
 
         self.widgets["label_info_match"].configure(text="LIVE MATCH")
 
@@ -526,14 +633,35 @@ class RootWindow:
             self.set_team_img(ind_2, False)
 
             self.widgets["label_info_match"].configure(text="PRE MATCH")
+            self.widgets["label_minute"].configure(text="")
             #self.widgets["label_minute"].lower()
 
             self.update_ranking()
 
-            # enabling the start button for the match to actually be played
+            # enabling the start button for the match to actually be played, and disabling next button to prevent match switching without gui updates
             self.widgets["button_start"].configure(state="normal")
+            self.widgets["button_next"].configure(state="disabled")
+
+            # open betting widgets (and clear the tk vars inside)
+            self.open_betting_widgets()
+
+            # update the betting values using ovrs before calculated and saved
+            if self.home_adv == 1:
+                self.ovrs[0]["bet"] = frapi.calc_team_ovr_for_betting(self.teams[0], True)
+                self.ovrs[0]["real"] = frapi.calc_team_ovr(self.teams[0], True)
+            else:
+                self.ovrs[0]["bet"] = frapi.calc_team_ovr_for_betting(self.teams[0], False)
+                self.ovrs[0]["real"] = frapi.calc_team_ovr(self.teams[0], False)
+            self.ovrs[1]["bet"] = frapi.calc_team_ovr_for_betting(self.teams[1], False)
+            self.ovrs[1]["real"] = frapi.calc_team_ovr(self.teams[1], False)
+            vals = bhapi.get_bets_for_match(self.ovrs[0]["bet"], self.ovrs[1]["bet"])
+            print("ovrs for betting=", self.ovrs[0]["bet"], self.ovrs[1]["bet"])
+            print("ovrs for real=", self.ovrs[0]["real"], self.ovrs[1]["real"])
+            for i in range(3):
+                self.bet_vals[i].set(vals[i])
 
             return False
+        
         except:
             print("Ghost...")
             # adding last result to box
@@ -559,6 +687,12 @@ class RootWindow:
         self.widgets["canvas_match_info_left"].configure(scrollregion=tmp_bbox)
         self.widgets["canvas_match_info_right"].configure(scrollregion=tmp_bbox)
 
+    def payout_betting(self, goals1: int, goals2: int):
+        if goals1 > goals2: i = 0
+        elif goals1 < goals2: i = 2
+        else: i = 1
+        s = round( (self.bet_vals[i].get() * self.get_bet_entries_floats()[i]) , 2)
+        self.current_money.set(round( (self.current_money.get() + s) , 2))
                 
 
     def min_event(self, team1: CalendarizedTeam.CalendarizedTeam, team2: CalendarizedTeam.CalendarizedTeam, ovr1: int, ovr2: int, g_coeff: int, subs_alr_1: int, subs_alr_2: int, slots_alr_1: int, slots_alr_2: int, goals_1: int, goals_2: int, f_time: list, s_time: list):
@@ -586,9 +720,9 @@ class RootWindow:
 
             self.widgets["label_info_match"].configure(text="MATCH OVER")
 
-            # re-enabling the start and next match button
-            if self.mode != 2:
-                self.widgets["button_start"].configure(state="normal")
+            # re-enabling the (start and) next match button
+            '''if self.mode != 2:
+                self.widgets["button_start"].configure(state="normal")'''
             self.widgets["button_next"].configure(state="normal")
 
             # adding last result to box
@@ -602,6 +736,22 @@ class RootWindow:
             self.update_ranking()
 
             self.set_next_match()
+            self.is_gui_init_needed = True
+
+            # payout the betting
+            self.payout_betting(goals_1, goals_2)
+
+            # FILE WRITING FOR STATISTICS & INFERENCE PURPOSES!
+            w,d,l = 0,0,0
+            with open("files/matches_results_test.txt", "a") as file_out:
+                if goals_1 > goals_2:
+                    w=1
+                elif goals_1 < goals_2:
+                    l=1
+                else:
+                    d=1
+                file_out.write(f"{self.ovrs[0]['real']-self.ovrs[1]['real']} {w} {d} {l} {self.ovrs[0]['real']} {self.ovrs[1]['real']}\n")
+            # -----------------------
             
             return
 
@@ -681,18 +831,12 @@ class RootWindow:
         f_time = frapi.get_first_half_mins()
         s_time = frapi.get_second_half_mins()
 
-        if self.home_adv == 1:
-            ovr1 = frapi.calc_team_ovr(team1.get_team(), True)
-        else:
-            ovr1 = frapi.calc_team_ovr(team1.get_team(), False)
-        ovr2 = frapi.calc_team_ovr(team2.get_team(), False)
-
         # higher the goal coeff, more difficult to score a goal (every match has its own for the whole match)
-        goal_coeff = frapi.get_goal_coeff(ovr1, ovr2)
+        goal_coeff = frapi.get_goal_coeff(self.ovrs[0]["real"], self.ovrs[1]["real"])
         print(f"goal coeff = {goal_coeff}")
 
-        print(team1.get_name(), ovr1, team1.get_market_val(), team1.calendar_index)
-        print(team2.get_name(), ovr2, team2.get_market_val(), team2.calendar_index)
+        print(team1.get_name(), self.ovrs[0]["real"], team1.get_market_val(), team1.calendar_index)
+        print(team2.get_name(), self.ovrs[1]["real"], team2.get_market_val(), team2.calendar_index)
 
         #min_label_index = "label_minute"
         #team1_widget_index = self.get_widget_index("team1text")
@@ -700,7 +844,7 @@ class RootWindow:
             
         # ------------------------ MATCH SIMULATION HERE -----------------
 
-        self.min_event(team1, team2, ovr1, ovr2, goal_coeff, subs_alr_1, subs_alr_2, slots_alr_1, slots_alr_2, goals_1, goals_2,  f_time, s_time)
+        self.min_event(team1, team2, self.ovrs[0]["real"], self.ovrs[1]["real"], goal_coeff, subs_alr_1, subs_alr_2, slots_alr_1, slots_alr_2, goals_1, goals_2, f_time, s_time)
         
         # ------------------------ MATCH SIMULATION ABOVE ----------------
         #print("FULL TIME:", team1.get_name(), goals_1, "-", goals_2, team2.get_name())
@@ -734,16 +878,13 @@ class RootWindow:
         self.widgets[str_widget].imagelist = []
         self.widgets[str_widget].imagelist.append(imgtk)
 
-    def set_friendly_gui(self, t1: Team.Team, t2: Team.Team):
+    def set_friendly_gui(self):
 
         self.mode = 1
 
-        self.teams[0] = t1
-        self.teams[1] = t2
-
         self.rankteams.clear()
-        self.rankteams.append( CalendarizedTeam.CalendarizedTeam(t1, 0, 0, 0, 0, 0, 0, 0, 0) )
-        self.rankteams.append( CalendarizedTeam.CalendarizedTeam(t2, 1, 0, 0, 0, 0, 0, 0, 0) )
+        self.rankteams.append( CalendarizedTeam.CalendarizedTeam(self.teams[0], 0, 0, 0, 0, 0, 0, 0, 0) )
+        self.rankteams.append( CalendarizedTeam.CalendarizedTeam(self.teams[1], 1, 0, 0, 0, 0, 0, 0, 0) )
         
         self.calendar.clear()
         self.cur_day = 0
@@ -755,15 +896,16 @@ class RootWindow:
         self.next_match = self.calendar[0][0]
 
         self.init_teams_for_match(self.next_match[0], self.next_match[1])
+        self.is_gui_init_needed = False
 
 
     def search_clubs(self):
-        t1, t2 = SearchClubSelector(self)
+        self.teams[0], self.teams[1] = SearchClubSelector(self)
         
         # after closing of second window
         #self.mode = 1
 
-        self.set_friendly_gui(t1, t2)
+        self.set_friendly_gui()
 
         
     def season_init(self, teams_selected: list):
@@ -890,14 +1032,16 @@ class RootWindow:
         #self.teams[0], self.teams[1] = self.teams[1], self.teams[0]
         #self.rankteams[0], self.rankteams[1] = self.rankteams[1], self.rankteams[0]
         self.next_match = (1-self.next_match[0], 1-self.next_match[1])
+        self.teams[0], self.teams[1] = self.teams[1], self.teams[0]
         self.init_teams_for_match(self.next_match[0], self.next_match[1])
 
     def random_friendly(self):
-        #self.mode = 1
-        t1 = rtapi.get_random_team(self.old_badges, self.selected_pot, self.select_nat_teams)
-        t2 = rtapi.get_random_team(self.old_badges, self.selected_pot, self.select_nat_teams)
+        self.mode = 1
+        self.teams[0], self.teams[1] = rtapi.get_random_teams(self.old_badges, self.selected_pot, self.select_nat_teams, 2)
+        '''t1 = rtapi.get_random_team(self.old_badges, self.selected_pot, self.select_nat_teams)
+        t2 = rtapi.get_random_team(self.old_badges, self.selected_pot, self.select_nat_teams)'''
 
-        self.set_friendly_gui(t1,t2)
+        self.set_friendly_gui()
 
         return
     
@@ -1275,7 +1419,7 @@ def SeasonHandlerMain(root) -> list[Team.Team]:
 
     
 
-    list_teams = tk.Canvas(win_season_handler, width=350, height=500, highlightthickness=2, highlightbackground='Black')
+    list_teams = tk.Canvas(win_season_handler, width=350, height=500, highlightthickness=2, highlightbackground="black")
     list_teams.place(x=320, y=320, anchor=tk.W)
 
     frame_list = tk.Frame(list_teams, width=350, height=10)
@@ -1447,7 +1591,7 @@ def main():
     root.title('Football Randomizer')
     #root.resizable(False, False)
     #root.geometry("1100x700+50+50")
-    root.minsize(1100,700)
+    #root.minsize(1100,700)
     #root.iconbitmap(default='img/icon.ico')
     app = RootWindow(root)
     root.mainloop()

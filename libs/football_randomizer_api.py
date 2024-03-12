@@ -25,9 +25,9 @@ MAX_SUBS = 5
 # coeffs to determine if the whole match is more goal likely or not (randomly selected, higher means less goal-like)
 #GOAL_COEFF_MIN = 5*(10**4)
 #GOAL_COEFF_MAX = 2*(10**5)+20000   old method (bugged for equal low ovr teams)
-GOAL_COEFF_DIV_MIN = 20
-GOAL_COEFF_DIV_MAX = 70
-GOAL_COEFF_MUL = 10
+GOAL_COEFF_DIV_MIN = 18
+GOAL_COEFF_DIV_MAX = 59
+GOAL_COEFF_MUL = 11
 
 
 # strings for occasions, cards, etc
@@ -199,6 +199,12 @@ ARR_STR_INJ = ["Injured player, shoulder collision", "Injured player, muscular s
 
 # calculation of a team ovr based on market val, home stadium/away, squad size and avg age, ...
 def calc_team_ovr(team: Team.Team, ishome: bool) -> int:
+    luck = random.gauss(0, 3.3)
+    #print(f"luck={luck}")
+    cur = calc_team_ovr_for_betting(team, ishome)
+    return cur + round(luck*cur/105)
+
+def calc_team_ovr_for_betting(team: Team.Team, ishome: bool) -> int:
     x = team.market_val
     ovr = round(float(FUNCT_K * math.log(x, 10)) + FUNCT_Q)
 
@@ -228,10 +234,7 @@ def calc_team_ovr(team: Team.Team, ishome: bool) -> int:
     else:
         age_add = -3
 
-    luck = random.gauss(0, 3.4)
-    #print(f"luck={luck}")
-
-    return ovr + stadium_add + size_add + age_add + (team.bonus) + round(luck*ovr/100)
+    return ovr + stadium_add + size_add + age_add + (team.bonus)
 
 def circle_method(teams_num: int) -> list:
 
@@ -320,7 +323,7 @@ def calc_subranges_events(cur_ovr: int, opp_ovr: int, start_range: int):
 
     #occ_subrange_perc = ((cur_ovr-opp_ovr)/20) + 50
     x = cur_ovr-opp_ovr
-    occ_subrange_perc = ((math.atan(0.005*x))*30)+50
+    occ_subrange_perc = ((math.atan(0.005*x))*30)+40
     if occ_subrange_perc >= 80:
         occ_subrange_perc = 80
     if occ_subrange_perc <= 20:
@@ -361,49 +364,218 @@ def calc_ovr_change_goals(goals_1: int, goals_2: int) -> tuple[int, int]:
     # here when goals_1 increases (called inverted when team2 actually scores)
 
     if goals_1-goals_2 == 7:
-        return random.randint(-8, -1), 1
+        return random.randint(-9, -2), +1
 
     if goals_1-goals_2 == 5:
-        return 1, -2
+        return +1, -2
     
     if goals_1-goals_2 == 4:
-        return 3, -2
+        return +1, -2
     
     if goals_1-goals_2 == 3:
-        return 3, -1
+        return +1, -2
     
     if goals_1 == 1 and goals_2 == 0:
         # scored the opener: game changer (?)
-        return random.randint(-8, 8), random.randint(-8,8)
+        return random.randint(-7, +7), random.randint(-7, +7)
     
     if goals_1 == goals_2:
         # team that scored just equalized!
-        return 1, random.randint(-6, -1)
+        return random.randint(-5, +1), random.randint(-6, +3)
     
     if goals_1-goals_2 == -1:
-        return 2, -1
+        # reduced disadvantage to 1 goal
+        return +2, -1
 
     return 0, 0
 
 def calc_ovr_change_sub(goals_1: int, goals_2: int, how_many: int) -> int:
     if goals_1-goals_2 < 0:
-        return random.randint(-2*how_many, 7+2*(how_many))
+        return random.randint(-1-2*how_many, 5+2*(how_many))
     
     if goals_1 == goals_2:
-        return random.randint(-3*how_many, 3*how_many)
+        return random.randint(-2*how_many, 2*how_many)
     
     if goals_1-goals_2 == 1:
-        return random.randint(-3*how_many, 2*how_many)
+        return random.randint(-1*how_many, 1*how_many)
     
     if goals_1-goals_2 > 4:
-        return random.randint((-8)+(-3*how_many), 2*how_many)
+        return random.randint((-8)+(-3*how_many), 1)
     
     if goals_1-goals_2 > 1:
         return random.randint(-2*how_many, 2*how_many)
     
     return 0
 
+def minute_event_aux(minute:int, is_first_time:bool, ovr1:int, ovr2:int, goal_coeff:int, subs_1:int, subs_2:int, slots_1:int, slots_2:int, goals_1:int, goals_2:int, who: int, rand_num: int):
+
+    ranges = int(RANGE_RAND_EVENT / 3)
+    goal_1 = 0
+    goal_2 = 0
+
+    num_subs_1 = subs_1
+    num_subs_2 = subs_2
+    num_slots_1 = slots_1
+    num_slots_2 = slots_2
+    num_less_1 = 0
+    num_less_2 = 0
+
+    ovr_change_1 = 0
+    ovr_change_2 = 0
+
+    str_event = ""
+    
+    printable = True
+
+    if who == 2:
+        ovr1, ovr2 = ovr2, ovr1
+
+    # left side of the bar, event for team 1 possibly happening
+    which_team = who
+    
+    start = (ranges*((who-1)*2)) + 1
+    occ_max_num, card_max_num, injury_max_num, bench_max_num = calc_subranges_events(ovr1, ovr2, start)
+
+    #print(occ_max_num, card_max_num, injury_max_num, bench_max_num)
+
+    if(start <= rand_num <= occ_max_num):
+        # occasion
+
+        #range_goal = (9*ovr2)+(1*ovr1)+goal_coeff
+        #poss_goal = random.randint(1, range_goal)
+        #if (poss_goal <= ovr1):
+        perc_goal = calc_perc_goal(minute, ovr1, ovr2, goal_coeff)
+        perc_arr = [perc_goal, 1-perc_goal]
+        poss_goal = random.choices([True, False], perc_arr)
+        if poss_goal[0]:
+            #goal
+            str_event = str_event + " Goal! " + " [" + str(goals_1+1) + "]" + " - " + str(goals_2)
+            goal_1 = 1
+
+            ovr_change_1, ovr_change_2 = calc_ovr_change_goals(goals_1+1, goals_2)
+
+        else:
+            #no goal
+            str_event = str_event + " " + random.choice(ARR_STR_OCCASIONS)
+
+
+    elif(occ_max_num < rand_num <= card_max_num):
+        # card
+        if random.random() < (0.09 + minute/2010):
+            # red card
+            num_less_1 = 1
+            str_event = str_event + " " + random.choice(ARR_STR_RCARDS)
+        else:
+            str_event = str_event + " " + random.choice(ARR_STR_YCARDS)
+            ovr_change_1 += -3
+
+    elif(card_max_num < rand_num <= injury_max_num):
+        # injury
+        str_event = str_event + " " + random.choice(ARR_STR_INJ)
+
+        if(subs_1 < 5 and slots_1 < 3):
+            num_subs_1 = subs_1+1
+            num_slots_1 = slots_1+1
+            str_event = str_event + ": substit."
+            ovr_change_1 = calc_ovr_change_sub(goals_1, goals_2, 1)
+        else:
+            num_less_1 = 1
+            str_event = str_event + ": out!"
+
+    elif(injury_max_num < rand_num <= bench_max_num):
+        # substitution
+
+        if(subs_1 >= 5 or slots_1 >= 3 or is_first_time):
+            printable = False
+        else:
+            possible_s = list(range(1, 1 + MAX_SUBS - subs_1))
+            num_subs_1 = random.choices(possible_s, PROB_SUBS[0:MAX_SUBS - subs_1])[0]
+
+            num_subs_1 = subs_1+num_subs_1
+            if(minute != 46):
+                num_slots_1 = slots_1+1
+
+            ovr_change_1 = calc_ovr_change_sub(goals_1, goals_2, (num_subs_1-subs_1))
+        
+            str_event = str_event + " " + str(num_subs_1-subs_1) + " substitution/s made, " +  str(num_subs_1) + " total"
+
+    else:
+        #nothing
+        printable = False
+
+    #print(str_minute + "evento1")
+    return num_subs_1, num_slots_1, num_less_1, goal_1, ovr_change_1, ovr_change_2, str_event, which_team
+        
+
 # calc if something happens on a single min of the game and if so changes data accordingly
+def minute_event_(minute:int, is_first_time:bool, ovr1:int, ovr2:int, goal_coeff:int, subs_1:int, subs_2:int, slots_1:int, slots_2:int, goals_1:int, goals_2:int):
+    rand_num = random.randint(1, RANGE_RAND_EVENT)
+
+    goal_1 = 0
+    goal_2 = 0
+
+    num_subs_1 = subs_1
+    num_subs_2 = subs_2
+    num_slots_1 = slots_1
+    num_slots_2 = slots_2
+    num_less_1 = 0
+    num_less_2 = 0
+
+    ovr_change_1 = 0
+    ovr_change_2 = 0
+
+    str_event = ""
+    
+    printable = True
+
+    #print(rand_num)
+
+    ranges = int(RANGE_RAND_EVENT / 3)
+
+    # DEBUG
+    o1=c1=i1=s1=0
+    o2=c2=i2=s2=0
+    # END DEBUG
+
+    # needed to determine which team has the event
+    which_team = 0
+
+    if (minute <= 45):
+        str_min = ("[" + str(minute) + "']")
+    elif(is_first_time):
+        str_min = ("[45+" + str(minute-45) + "']")
+    elif(minute <= 90):
+        str_min = ("[" + str(minute) + "']")
+    else:
+        str_min = ("[90+" + str(minute-90) + "']")
+
+    str_event += (str_min)
+
+    if(rand_num <= ranges):
+        num_subs_1, num_slots_1, num_less_1, goal_1, ovr_change_1, ovr_change_2, str_event, which_team = minute_event_aux(minute, is_first_time, ovr1, ovr2, goal_coeff, subs_1, subs_2, slots_1, slots_2, goals_1, goals_2, 1, rand_num)
+        
+    elif((2*ranges) < rand_num <= RANGE_RAND_EVENT):
+        num_subs_2, num_slots_2, num_less_2, goal_2, ovr_change_1, ovr_change_2, str_event, which_team = minute_event_aux(minute, is_first_time, ovr1, ovr2, goal_coeff, subs_1, subs_2, slots_1, slots_2, goals_1, goals_2, 2, rand_num)
+
+    else:
+        # center of the bar, nothing happens
+        printable = False
+
+    #print(o1,o2,c1,c2,i1,i2,s1,s2)
+    if not printable:
+        #print(str_event)
+        str_event = ""
+        which_team = 0
+
+    
+    if num_less_1 == 1:
+        ovr_change_1 -= 15
+    if num_less_2 == 1:
+        ovr_change_2 -= 15
+
+    return num_subs_1, num_subs_2, num_slots_1, num_slots_2, num_less_1, num_less_2, goal_1, goal_2, ovr_change_1, ovr_change_2, str_event, which_team
+
+
 def minute_event(minute:int, is_first_time:bool, ovr1:int, ovr2:int, goal_coeff:int, subs_1:int, subs_2:int, slots_1:int, slots_2:int, goals_1:int, goals_2:int):
     rand_num = random.randint(1, RANGE_RAND_EVENT)
 
@@ -426,7 +598,7 @@ def minute_event(minute:int, is_first_time:bool, ovr1:int, ovr2:int, goal_coeff:
 
     #print(rand_num)
 
-    ranges = RANGE_RAND_EVENT / 3
+    ranges = int(RANGE_RAND_EVENT / 3)
 
     # DEBUG
     o1=c1=i1=s1=0
@@ -456,7 +628,7 @@ def minute_event(minute:int, is_first_time:bool, ovr1:int, ovr2:int, goal_coeff:
 
         #print(occ_max_num, card_max_num, injury_max_num, bench_max_num)
 
-        if(start < rand_num <= occ_max_num):
+        if(start <= rand_num <= occ_max_num):
             # occasion
             o1+=1
 
@@ -498,7 +670,7 @@ def minute_event(minute:int, is_first_time:bool, ovr1:int, ovr2:int, goal_coeff:
                 num_subs_1 = subs_1+1
                 num_slots_1 = slots_1+1
                 str_event = str_event + ": substit."
-                ovr_change_2 = calc_ovr_change_sub(goals_1, goals_2, 1)
+                ovr_change_1 += calc_ovr_change_sub(goals_1, goals_2, 1)
             else:
                 num_less_1 = 1
                 str_event = str_event + ": out!"
@@ -517,7 +689,7 @@ def minute_event(minute:int, is_first_time:bool, ovr1:int, ovr2:int, goal_coeff:
                 if(minute != 46):
                     num_slots_1 = slots_1+1
 
-                    ovr_change_1 = calc_ovr_change_sub(goals_1, goals_2, (num_subs_1-subs_1))
+                ovr_change_1 += calc_ovr_change_sub(goals_1, goals_2, (num_subs_1-subs_1))
             
                 str_event = str_event + " " + str(num_subs_1-subs_1) + " substitution/s made, " +  str(num_subs_1) + " total"
 
@@ -531,12 +703,12 @@ def minute_event(minute:int, is_first_time:bool, ovr1:int, ovr2:int, goal_coeff:
         # right side of the bar, event for team 2 possibly happening
         which_team = 2
 
-        start = (2*ranges)
+        start = (2*ranges)+1
         occ_max_num, card_max_num, injury_max_num, bench_max_num = calc_subranges_events(ovr2, ovr1, start)
 
         #print(occ_max_num, card_max_num, injury_max_num, bench_max_num)
 
-        if(start < rand_num <= occ_max_num):
+        if(start <= rand_num <= occ_max_num):
             # occasion
             o2+=1
 
@@ -552,7 +724,7 @@ def minute_event(minute:int, is_first_time:bool, ovr1:int, ovr2:int, goal_coeff:
                 str_event = "Goal! " + " " + str(goals_1) + " - [" + str(goals_2+1) + "] " + str_event
                 goal_2 = 1
 
-                ovr_change_2, ovr_change_1 = calc_ovr_change_goals(goals_2+1, goals_1)
+                ovr_change_2, ovr_change_1 = calc_ovr_change_goals(goals_1=goals_2+1, goals_2=goals_1)
 
             else:
                 #no goal
@@ -578,7 +750,7 @@ def minute_event(minute:int, is_first_time:bool, ovr1:int, ovr2:int, goal_coeff:
                 num_subs_2 = subs_2+1
                 num_slots_2 = slots_2+1
                 str_event = tmp + ": substit. " + str_event
-                ovr_change_2 = calc_ovr_change_sub(goals_2, goals_1, 1)
+                ovr_change_2 += calc_ovr_change_sub(goals_2, goals_1, 1)
             else:
                 num_less_2 = 1
                 str_event = tmp + ": out! " + str_event
@@ -597,7 +769,7 @@ def minute_event(minute:int, is_first_time:bool, ovr1:int, ovr2:int, goal_coeff:
                 if(minute != 46):
                     num_slots_2 = slots_2+1
 
-                ovr_change_2 = calc_ovr_change_sub(goals_2, goals_1, (num_subs_2-subs_2))
+                ovr_change_2 += calc_ovr_change_sub(goals_2, goals_1, (num_subs_2-subs_2))
 
                 str_event = str(num_subs_2-subs_2) + " substitution/s made, " +  str(num_subs_2) + " total " + str_event
 
@@ -644,8 +816,11 @@ def get_second_half_mins() -> list:
 
 
 def get_goal_coeff(ovr1: int, ovr2: int) -> int:
-    rand_div = random.randint(GOAL_COEFF_DIV_MIN, GOAL_COEFF_DIV_MAX)/10
-    ret_coeff = (ovr1*ovr2/rand_div) + GOAL_COEFF_MUL*ovr1 + GOAL_COEFF_MUL*ovr2
+    #rand_div = random.randint(GOAL_COEFF_DIV_MIN, GOAL_COEFF_DIV_MAX)/10
+    #ret_coeff = (ovr1*ovr2/rand_div) + GOAL_COEFF_MUL*ovr1 + GOAL_COEFF_MUL*ovr2
+    min_r, max_r = 0.91, 0.97
+    rand_exp = (random.random() * (max_r-min_r)) + min_r
+    ret_coeff = (ovr1*ovr2)**rand_exp
     return ret_coeff
     #return random.randint(GOAL_COEFF_MIN, GOAL_COEFF_MAX)
 
