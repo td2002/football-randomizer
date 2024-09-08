@@ -821,7 +821,7 @@ def get_goal_coeff(ovr1: int, ovr2: int) -> int:
     min_r, max_r = 0.91, 0.97
     rand_exp = (random.random() * (max_r-min_r)) + min_r
     ret_coeff = (ovr1*ovr2)**rand_exp
-    return ret_coeff
+    return int(ret_coeff)
     #return random.randint(GOAL_COEFF_MIN, GOAL_COEFF_MAX)
 
 def string_ranking_table(cal_teams: list) -> str:

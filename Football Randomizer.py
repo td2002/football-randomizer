@@ -157,7 +157,7 @@ class RootWindow:
         for font_group in font_groups:
             assign_fonts(font_group, font_families[font_group])
 
-        print(font.families())
+        #print(font.families())
 
         self.frame = tk.Frame(self.master)
         self.frame.pack(fill=tk.BOTH, expand=1)
@@ -359,13 +359,13 @@ class RootWindow:
             self.widgets["frame_bottom"].columnconfigure(index=i, weight=1)
         self.widgets["frame_bottom"].columnconfigure(index=2, weight=0)
         for i in range(3):
-            self.widgets["frame_bottom"].rowconfigure(index=i, weight=1)       
+            self.widgets["frame_bottom"].rowconfigure(index=i, weight=1)
 
         self.widgets["label_current_money_text"] = tk.Label(self.widgets["frame_bottom"], text="Current money amount", anchor=tk.S)
         self.widgets["label_current_money_text"].grid(row=0, column=0, sticky=tk.NSEW)
         
         self.current_money = tk.DoubleVar(value=bhapi.get_init_amount())
-        self.widgets["label_current_money"] = FormatLabel.FormatLabel(self.widgets["frame_bottom"], textvariable=self.current_money, format="🤯 {:.2f}", font=(self.fonts["main"], 18, "bold"), anchor=tk.N)
+        self.widgets["label_current_money"] = FormatLabel.FormatLabel(self.widgets["frame_bottom"], textvariable=self.current_money, format="⚽ {:.2f}", font=(self.fonts["main"], 18, "bold"), anchor=tk.N)
         self.widgets["label_current_money"].grid(row=1, column=0, rowspan=2, sticky=tk.NSEW)
 
         self.widgets["label_odds_text"] = tk.Label(self.widgets["frame_bottom"], text="Match odds", anchor=tk.E)
@@ -603,6 +603,8 @@ class RootWindow:
 
             team1 : Team.Team = self.rankteams[ind_1].get_team()
             team2 : Team.Team = self.rankteams[ind_2].get_team()
+            self.teams[0] = team1
+            self.teams[1] = team2
 
             self.widgets["label_team1name"].configure(text=team1.get_name())
             self.widgets["label_team2name"].configure(text=team2.get_name())
@@ -832,6 +834,7 @@ class RootWindow:
         s_time = frapi.get_second_half_mins()
 
         # higher the goal coeff, more difficult to score a goal (every match has its own for the whole match)
+        print(self.ovrs[0]["real"])
         goal_coeff = frapi.get_goal_coeff(self.ovrs[0]["real"], self.ovrs[1]["real"])
         print(f"goal coeff = {goal_coeff}")
 
